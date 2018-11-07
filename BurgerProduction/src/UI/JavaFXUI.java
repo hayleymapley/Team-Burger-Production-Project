@@ -55,20 +55,32 @@ public class JavaFXUI extends Application {
 	private Button receiptIn;
 	
 	//Inventory Screen
+	private BorderPane inventoryRoot = new BorderPane();
+	
+	private HBox inventoryTitleBar = new HBox();
+	private Text inventoryDetailsText = new Text();
+	private VBox inventoryView = new VBox();
+	private VBox inventoryReceipt = new VBox();
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
 		// TODO Auto-generated method stub
 		try {
-			Scene scene = new Scene(root,1400,900);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Scene mainScene = new Scene(root,1400,900);
+			mainScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
-			//Sets up UI elements
-			initialisePane();	
+			Scene inventoryScene = new Scene(inventoryRoot,1400,900);
+			inventoryScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			//Sets up main UI elements
+			initialiseMainElements();	
+			
+			initialiseInventoryElements();
 			
 			primaryStage.setTitle("Burger Production Application");
-			primaryStage.setScene(scene);
+			primaryStage.setScene(mainScene);
+//			primaryStage.setScene(inventoryScene);
 			primaryStage.show();
 		} catch(Exception e) {
 			
@@ -80,7 +92,7 @@ public class JavaFXUI extends Application {
 		launch(args);
 	}
 	
-	public void initialisePane() {
+	public void initialiseMainElements() {
 		//Top Labels
 		ordersText.setText("Orders");
 		ordersText.setFont(Font.font(30));
@@ -153,6 +165,23 @@ public class JavaFXUI extends Application {
 		root.setCenter(orderDetails);
 		root.setLeft(ordersListView);
 		root.setRight(inventory);
+	}
+	
+	public void initialiseInventoryElements() {
+		
+		inventoryDetailsText.setText("Inventory Details");
+		inventoryDetailsText.setFont(Font.font(30));
+		inventoryDetailsText.setFill(Color.WHITE);
+		
+		inventoryTitleBar.getChildren().addAll(inventoryDetailsText);
+		inventoryTitleBar.setSpacing(430);
+		inventoryTitleBar.setPadding(new Insets(15,15,15,15));
+		inventoryTitleBar.setAlignment(Pos.CENTER);
+		inventoryTitleBar.setId("titleBar");
+		
+		inventoryRoot.setTop(inventoryTitleBar);
+		inventoryRoot.setLeft(inventoryView);
+		inventoryRoot.setRight(inventoryReceipt);
 	}
 	
 	public boolean viewOrder(Order order) {
