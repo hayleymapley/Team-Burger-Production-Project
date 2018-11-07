@@ -1,0 +1,33 @@
+CREATE TABLE Stock_Ingredients (
+Name text,
+Quantity int
+);
+
+INSERT INTO Stock_Ingredients (name, quantity) 
+VALUES 
+('Bun_Lettuce', 50),
+('Bun_Standard', 50),
+('Vege_Lettuce', 50),
+('Vege_Tomato', 50),
+('Vege_Onion', 50),
+('Vege_Pickles', 50),
+('Vege_Beetroot', 50),
+('Cheese_Cheddar', 50),
+('Cheese_Vegan', 50),
+('Patty_Beef', 50),
+('Patty_Chicken', 50),
+('Patty_Tofu', 50),
+('Sauce_Tomato', 50),
+('Sauce_Chilli', 50), 
+('Sauce_Aioli', 50);
+
+poperere=> create table customers (customer_id serial primary key, name text, email text);
+
+poperere=> create table orders (order_id serial primary key, customer_id integer references customers, completed boolean, timestamp timestamp);
+                                                             
+
+
+
+create table burger_ingredients (burger_id serial primary key, order_id int references orders, Bun_Lettuce int,Bun_Standard int,Vege_Lettuce int,Vege_Tomato int,Vege_Onion int,Vege_Pickles int,Vege_Beetroot int,Cheese_Cheddar int,Cheese_Vegan int,Patty_Beef int,Patty_Chicken int,Patty_Tofu int,Sauce_Tomato int,Sauce_Chilli int, Sauce_Aioli int);
+
+
