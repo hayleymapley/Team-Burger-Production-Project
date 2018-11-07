@@ -292,16 +292,30 @@ public class JavaFXUI extends Application {
 		adjustmentTitle.setText("Inventory Adjustment\n");
 		adjustmentTitle.setFont(Font.font(30));
 		
-		inventoryAdjustment.getChildren().addAll(adjustmentTitle, bunLettuceField, bunStandardField, vegeLettuceField, 
-				vegeTomatoField, vegeOnionField, vegePicklesField, vegeBeetrootField, cheeseCheddarField, cheeseVeganField,
-				pattyBeefField, pattyChickenField, pattyTofuField, sauceTomatoField, sauceChilliField, sauceAioliField);
+		inventoryAdjustment.getChildren().addAll(adjustmentTitle, bunLettuceLabel, bunLettuceField, bunStandardLabel, bunStandardField, vegeLettuceLabel, vegeLettuceField, 
+				vegeTomatoLabel, vegeTomatoField, vegeOnionLabel, vegeOnionField, vegePicklesLabel, vegePicklesField, vegeBeetrootLabel, vegeBeetrootField, cheeseCheddarLabel, 
+				cheeseCheddarField, cheeseVeganLabel, cheeseVeganField, pattyBeefLabel, pattyBeefField, pattyChickenLabel, pattyChickenField, pattyTofuLabel, pattyTofuField,
+				sauceTomatoLabel, sauceTomatoField, sauceChilliLabel, sauceChilliField, sauceAioliLabel, sauceAioliField);
 		
-		GridPane.setConstraints(adjustmentTitle, 0, 1);
+		GridPane.setConstraints(adjustmentTitle, 0, 0);
+		GridPane.setConstraints(bunLettuceLabel, 0, 1);
+		GridPane.setConstraints(bunStandardLabel, 0, 2);
+		GridPane.setConstraints(vegeLettuceLabel, 0, 3);
+		GridPane.setConstraints(vegeTomatoLabel, 0, 4);
+		GridPane.setConstraints(vegeOnionLabel, 0, 5);
+		GridPane.setConstraints(vegePicklesLabel, 0, 6);
+		GridPane.setConstraints(vegeBeetrootLabel, 0, 7);
+		GridPane.setConstraints(cheeseCheddarLabel, 0, 8);
+		GridPane.setConstraints(cheeseVeganLabel, 0, 9);
+		GridPane.setConstraints(pattyBeefLabel, 0, 10);
+		GridPane.setConstraints(pattyChickenLabel, 0, 11);
+		GridPane.setConstraints(pattyTofuLabel, 0, 12);
+		GridPane.setConstraints(sauceTomatoLabel, 0, 13);
+		GridPane.setConstraints(sauceChilliLabel, 0, 14);
+		GridPane.setConstraints(sauceAioliLabel, 0, 15);
 		
 		inventoryAdjustment.setPadding(new Insets(25,25,25,25));
-		inventoryAdjustment.setAlignment(Pos.TOP_LEFT);
-		
-		
+
 		inventoryRoot.setTop(inventoryTitleBar);
 		inventoryRoot.setLeft(inventoryView);
 		inventoryRoot.setRight(inventoryAdjustment);
