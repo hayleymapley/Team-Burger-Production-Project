@@ -22,12 +22,42 @@
         <div class="container" id="contactForm">
         <form action="ContactUs.php" method=post>
         
-        <p><center>Location</p>
-        <div id="map" style="width:100%;height:500px"></div>
-        </br>
-        <p><center>Contact Form</p>
+        <p><center>Order Form</p>
         <br>
-            <label for="name">Your Name</label>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike
+                onclick = "orderSummary (this.form)"> <br>
+        <input type="checkbox" name="vehicle1" id="n1" onclick="sync()" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        
+        
+        <div id = OrderSummary>   
+        <h2>Order Summary</h2>
+        
+        <script>
+function sync()
+{
+  var n1 = document.getElementById('n1');
+  var n2 = document.getElementById('n2');
+  n2.value = n1.value;
+}
+</script>
+<!--<input type="checkbox" name="n1" id="n1" onclick="sync()">-->
+<input type="text" name="n2" id="n2"/>
+        
+        <textarea rows="" cols=""></textarea>
+          <label for="name">Your Name</label>
             <br>
             <input type="text" id="name" name="name">
             <br>
@@ -35,25 +65,26 @@
             <br>
             <input type="text" id="emailAddress" name="emailAddress">
             <br>
-            <label for="phoneNumber">Phone Number</label>
+<!--             <label for="phoneNumber">Phone Number</label> -->
+<!--             <br> -->
+<!--             <input type="text" id="phoneNumber" name="phoneNumber"> -->
+<!--             <br> -->
+<!--             <label for="contactMethod">How should we get in touch?</label> -->
+<!--             <br> -->
+<!--             <select id="contactMethod" name="contactMethod"> -->
+<!--                 <option value="email">Email</option> -->
+<!--                 <option value="phone">Phone</option> -->
+<!--             </select> -->
             <br>
-            <input type="text" id="phoneNumber" name="phoneNumber">
-            <br>
-            <label for="contactMethod">How should we get in touch?</label>
-            <br>
-            <select id="contactMethod" name="contactMethod">
-                <option value="email">Email</option>
-                <option value="phone">Phone</option>
-            </select>
-            <br>
-            <label for="query">Your Query</label>
+            <label for="query">Additional Info</label>
             <br>
             <textarea id="query" name="query" placeholder="Write us a message! Just resize the box if you need more space for your message." style="height:200px" style="width:500px"></textarea>
             <br>
             <input type="submit" value="Submit">
             <br>
             <br>
-            <br>
+            <br></div>
+       
             
             </div>
             
