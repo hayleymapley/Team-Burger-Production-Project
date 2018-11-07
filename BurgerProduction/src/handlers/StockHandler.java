@@ -13,68 +13,83 @@ import productiionLineDataClasses.Ingredient;
 public class StockHandler {
 
 	private List<Ingredient> ingredientsList;
+	private final static String databaseUser = "poperere";
+	private final static String databasePass = "pass123";
 
-	public List<Ingredient> retrieveIngredientsFromDB(String databaseUser, String databasePass) throws SQLException { 
-		String[] ingredientNameSplit = null;
-    	String ingredientType = null;
-    	String ingredientTitle = null;
-    	String ingredientName = null;
-    	int quantity = 0;
-    	ingredientsList = new ArrayList<>();
-		
-        try {
-        	
+	//goes to DB and returns list of ingredients for UI
+
+	public Connection connectToDB(String databaseUser, String databasePass) throws SQLException { 
+		Connection connection;
+
+		try {
+
 			Class.forName("org.postgresql.Driver");
-			
-			 Connection connection = null;  
-			 
-			 	String query = "select name, quantity from stock_ingredients";
-			 
-		        String url = "jdbc:postgresql://db.ecs.vuw.ac.nz/"+databaseUser+"_jdbc";
-		        
-		        connection = DriverManager.getConnection(url,databaseUser, databasePass);
-		        
-		        Statement s = connection.createStatement();
-		        
-		        ResultSet rs = s.executeQuery(query);
-		  
-		        while(rs.next()) {
-		        
-		        	String name = rs.getString("name");
-		        	
-		        	ingredientNameSplit  = name.split("_");
-		        	
-		        	quantity = rs.getInt("quantity");
-		        	
-		        	ingredientType = ingredientNameSplit[0].toString();
-		        	
-		        	ingredientTitle = ingredientNameSplit[1].toString();
-		       
-		        	ingredientName = ingredientTitle + " " + ingredientType;
-		        	
-		        	Ingredient ingredient = new Ingredient(ingredientName, quantity);
-		        	
-		        	ingredientsList.add(ingredient);
-		        	
-		        }
-		        
-		       rs.close();
-		       s.close();
-		        
+
+			String url = "jdbc:postgresql://db.ecs.vuw.ac.nz/"+databaseUser+"_jdbc";
+
+			connection = DriverManager.getConnection(url,databaseUser, databasePass);
+
+			return connection; //if connection works, return connection object
+
 		} catch (ClassNotFoundException e) {
-			
+
 			e.printStackTrace();
 		}
 
-		//TODO: goes to DB and returns list of ingredients for UI
+		return null; //if connection does not work
+	}
+
+	public List<Ingredient> retrieveIngredientsFromDB() throws SQLException { 
+		String[] ingredientNameSplit = null;
+		String ingredientType = null;
+		String ingredientTitle = null;
+		String ingredientName = null;
+		int quantity = 0;
+		ingredientsList = new ArrayList<>();
+		String query = "select name, quantity from stock_ingredients"; //returns all stock within stock_ingredients table
+
+		Connection connection = connectToDB(databaseUser, databasePass);
+
+		Statement s = connection.createStatement();
+
+		ResultSet rs = s.executeQuery(query);
+
+		while(rs.next()) {
+
+			String name = rs.getString("name");
+
+			ingredientNameSplit  = name.split("_");
+
+			quantity = rs.getInt("quantity");
+
+			ingredientType = ingredientNameSplit[0].toString();
+
+			ingredientTitle = ingredientNameSplit[1].toString();
+
+			ingredientName = ingredientTitle + " " + ingredientType;
+
+			Ingredient ingredient = new Ingredient(ingredientName, quantity);
+
+			ingredientsList.add(ingredient);
+
+		}
+
+		rs.close();
+		s.close();
 
 		return ingredientsList;
 	}
 
-	public int addStockToDB(Ingredient ingredient, int quantity) {
+	public int addStockToDB(Ingredient ingredient, int quantity) throws SQLException{
 		int newQuantity = 0;
+		String requiredIngredient = ingredient.getName();
+		String sqlUpdate = "update stock_ingredients+ set " + requiredIngredient; //find correct syntax for increasing the quantity by x amount
 
-		//TODO: adds a certain amount of an ingredient to the stock 
+		Connection connection = connectToDB(databaseUser, databasePass);
+		
+		Statement s = connection.createStatement();
+		
+		s.executeUpdate(sqlUpdate);
 
 		return newQuantity;
 
@@ -99,9 +114,11 @@ public class StockHandler {
 	}
 
 	public static void main(String[] args) throws SQLException {
-		StockHandler s = new StockHandler();
-		s.retrieveIngredientsFromDB("poperere", "pass123");
 		
+		StockHandler s = new StockHandler();
+		
+		s.retrieveIngredientsFromDB();
+
 	}
 
 }
