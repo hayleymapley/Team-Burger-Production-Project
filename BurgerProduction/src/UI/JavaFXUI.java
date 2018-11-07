@@ -79,6 +79,7 @@ public class JavaFXUI extends Application {
 		//ListView
 		ordersListView = new ListView<>();
 		ordersListView.getItems().addAll("Order #54625", "Order #58965");
+		ordersListView.setId("listView");
 		
 		//Order Details
 		orderDetails = new VBox();
