@@ -11,7 +11,7 @@ import java.util.List;
 
 import UI.JavaFXUI;
 import productiionLineDataClasses.Burger;
-import productiionLineDataClasses.Customer;
+//import productiionLineDataClasses.Customer;
 import productiionLineDataClasses.Order;
 
 public class OrderHandler {
