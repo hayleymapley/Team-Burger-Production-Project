@@ -19,16 +19,23 @@
         <h1><center>Contact Us</h1>
         <p><center>Feel free to pop in and see us, or complete the form below and we'll be in touch!</p>
         
-        <div class="container" id="contactForm">
+        <div style='float:left' class="container" id="contactForm">
         <form action="ContactUs.php" method=post>
         
-        <p><center>Order Form</p>
+       
+        <p><left>Order Form</p>
         <br>
-        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike
-                onclick = "orderSummary (this.form)"> <br>
-        <input type="checkbox" name="vehicle1" id="n1" onclick="sync()" value="Bike"> I have a bike<br>
-        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
-        <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+        <p>Bun</p>
+        <input type="checkbox" name="n1" id="n1" onclick="sync()" value="Bun"> Bun<br>
+        <input type="checkbox" name="n3" id="n3" onclick="sync2()" value="Lettuce"> Lettuce<br>
+        <p>Vegetable Fillings</p>
+        <input type="checkbox" name="n5" id="n5" onclick="sync3()" value="Tomato"> Tomato<br>
+        <input type="checkbox" name="n7" id="n7" onclick="sync4()" value="Lettuce"> Lettuce<br>
+        <input type="checkbox" name="n9" id="n9" onclick="sync5()" value="Onion"> Onion<br>
+        <input type="checkbox" name="n11" id="n11" onclick="sync6()" value="Pickles"> Pickles<br>
+        <input type="checkbox" name="n13" id="n13" onclick="sync7()" value="Beetroot"> Beetroot<br>
+       	<p>Cheese</p>
+       
         <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
         <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
         <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
@@ -41,8 +48,8 @@
         <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
         <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
         
-        
-        <div id = OrderSummary>   
+        </div>
+        <div style='float:center' class="textarea" id="summaryForm">
         <h2>Order Summary</h2>
         
         <script>
@@ -51,20 +58,43 @@ function sync()
   var n1 = document.getElementById('n1');
   var n2 = document.getElementById('n2');
   n2.value = n1.value;
-}
+  }
+  
+  function sync2()
+{
+  var n3 = document.getElementById('n3');
+  var n4 = document.getElementById('n4');
+  n4.value = n3.value;
+ 
+ }
+ 
+   function sync3()
+{
+ 
+  var n5 = document.getElementById('n5');
+  var n6 = document.getElementById('n6');
+  n6.value = n5.value;
+ 
+ }
 </script>
-<!--<input type="checkbox" name="n1" id="n1" onclick="sync()">-->
-<input type="text" name="n2" id="n2"/>
+
+
+<form>
+<input type="list" name="n2" id="n2" readonly/><br>
+<input type="list" name="n4" id="n4" readonly/><br>
+
+</form>
+</div>
         
-        <textarea rows="" cols=""></textarea>
-          <label for="name">Your Name</label>
-            <br>
-            <input type="text" id="name" name="name">
-            <br>
-            <label for="emailAddress">Your Email</label>
-            <br>
-            <input type="text" id="emailAddress" name="emailAddress">
-            <br>
+    <!--    <textarea rows="" cols=""></textarea>
+   <!--       <label for="name">Your Name</label>
+   <!--         <br>
+   <!--         <input type="text" id="name" name="name">
+   <!--         <br>
+  <!--          <label for="emailAddress">Your Email</label>
+  <!--          <br>
+ <!--           <input type="text" id="emailAddress" name="emailAddress">
+  <!--         <br>
 <!--             <label for="phoneNumber">Phone Number</label> -->
 <!--             <br> -->
 <!--             <input type="text" id="phoneNumber" name="phoneNumber"> -->
@@ -75,23 +105,23 @@ function sync()
 <!--                 <option value="email">Email</option> -->
 <!--                 <option value="phone">Phone</option> -->
 <!--             </select> -->
+  <!--          <br>
+  <!--          <label for="query">Additional Info</label>
+   <!--         <br>
+    <!--        <textarea id="query" name="query" placeholder="Write us a message! Just resize the box if you need more space for your message." style="height:200px" style="width:500px"></textarea>
             <br>
-            <label for="query">Additional Info</label>
-            <br>
-            <textarea id="query" name="query" placeholder="Write us a message! Just resize the box if you need more space for your message." style="height:200px" style="width:500px"></textarea>
-            <br>
-            <input type="submit" value="Submit">
-            <br>
-            <br>
-            <br></div>
+    <!--        <input type="submit" value="Submit">
+     <!--       <br>
+     <!--       <br>
+      <!--      <br></div>
        
             
-            </div>
+           <!-- </div>
             
-        </form>
-    </div>
-    </div>
-    </div>
+      <!--  </form>
+   <!-- </div>
+  <!--  </div>
+   <!-- </div>
     
         <?php
             if (isset($_POST['name'])) {
