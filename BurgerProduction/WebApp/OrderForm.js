@@ -1,14 +1,8 @@
 const state = {}
 
 const sync = (val, isChecked) => {
+    state[val] = isChecked
     
-    console.log(isChecked)
-    if(!state[val]){
-        state[val] = isChecked
-    } else {
-        state[val] = isChecked
-    }
-
     renderList()
 }
 

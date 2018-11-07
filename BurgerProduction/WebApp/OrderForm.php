@@ -4,8 +4,8 @@
         <meta charset="utf-8" />
         <link rel="stylesheet" href="stylesheet.css" />
         <title>NullBurger | Order Form</title>
-        <script type="text/javascript" src="OrderForm.js"></script>
-       
+        <script type="text/javascript" src="/Users/Kitty/git/burgermakingproject/BurgerProduction/Scripts/WebApp/OrderForm.js"></script>
+     
     </head>
     
 

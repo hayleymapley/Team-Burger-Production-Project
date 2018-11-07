@@ -6,7 +6,6 @@ body {
 
 h1 {
 	color: white;
-	z-link: 100;
 	background: lightblue;
 	font-size: 80pt;
 	font-family: Avenir;
@@ -18,7 +17,7 @@ a:link {
 	color: pink;
 	transition: color 1s;
 	font-family: Avenir;
-	font-size 40;
+	font-size: 40;
 }
 
 .menubar {
@@ -31,7 +30,6 @@ a:link {
 	color: white;
 	text-align: right;
 	padding: 14px 16px;
-	text-direction: none;
 	font-size: 17px;
 	font-family: Avenir;
 }
@@ -98,7 +96,7 @@ ul.social-icons {
 input[type=text], select, textarea {
     width: 100px;
     padding: 6px;
-    border: 1px solid
+    border: 1px solid;
     border-color: White;
     border-radius: 4px; 
     box-sizing: border-box; 
@@ -235,4 +233,3 @@ input.button:after {
     overflow: hidden;
     cursor: pointer;
 }
-
