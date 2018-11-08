@@ -156,8 +156,12 @@ public class JavaFXUI extends Application {
 
 			adjustButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
-				public void handle(ActionEvent event) {
-					adjustStock();
+				public void handle(ActionEvent event){
+					try {
+						ingredients = stockHandler.retrieveIngredientsFromDB();
+						adjustStock();
+						ingredients = stockHandler.retrieveIngredientsFromDB();
+					} catch (Exception e) {e.printStackTrace();}
 					//Update stock levels
 				}	
 			});
@@ -430,141 +434,141 @@ public class JavaFXUI extends Application {
 			for (int i=0; i<fields.size(); i++) {
 				if (!fields.get(i).getText().trim().isEmpty()) {
 					stockHandler.addStockToDB(ingredients.get(i), Integer.parseInt(fields.get(i).getText()));
-//					switch (i) {
-//					case 0:
-//						stockHandler.addStockToDB(ingredients.get(0), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 1:
-//						stockHandler.addStockToDB(ingredients.get(1), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 2:
-//						stockHandler.addStockToDB(ingredients.get(2), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 3:
-//						stockHandler.addStockToDB(ingredients.get(3), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 4:
-//						stockHandler.addStockToDB(ingredients.get(4), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 5:
-//						stockHandler.addStockToDB(ingredients.get(5), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 6:
-//						stockHandler.addStockToDB(ingredients.get(6), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 7:
-//						stockHandler.addStockToDB(ingredients.get(7), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 8:
-//						stockHandler.addStockToDB(ingredients.get(8), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 9:
-//						stockHandler.addStockToDB(ingredients.get(9), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 10:
-//						stockHandler.addStockToDB(ingredients.get(10), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 11:
-//						stockHandler.addStockToDB(ingredients.get(11), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 12:
-//						stockHandler.addStockToDB(ingredients.get(12), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 13:
-//						stockHandler.addStockToDB(ingredients.get(13), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					case 14:
-//						stockHandler.addStockToDB(ingredients.get(14), Integer.parseInt(fields.get(i).getText()));
-//						break;
-//					}
+					//					switch (i) {
+					//					case 0:
+					//						stockHandler.addStockToDB(ingredients.get(0), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 1:
+					//						stockHandler.addStockToDB(ingredients.get(1), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 2:
+					//						stockHandler.addStockToDB(ingredients.get(2), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 3:
+					//						stockHandler.addStockToDB(ingredients.get(3), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 4:
+					//						stockHandler.addStockToDB(ingredients.get(4), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 5:
+					//						stockHandler.addStockToDB(ingredients.get(5), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 6:
+					//						stockHandler.addStockToDB(ingredients.get(6), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 7:
+					//						stockHandler.addStockToDB(ingredients.get(7), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 8:
+					//						stockHandler.addStockToDB(ingredients.get(8), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 9:
+					//						stockHandler.addStockToDB(ingredients.get(9), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 10:
+					//						stockHandler.addStockToDB(ingredients.get(10), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 11:
+					//						stockHandler.addStockToDB(ingredients.get(11), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 12:
+					//						stockHandler.addStockToDB(ingredients.get(12), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 13:
+					//						stockHandler.addStockToDB(ingredients.get(13), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					case 14:
+					//						stockHandler.addStockToDB(ingredients.get(14), Integer.parseInt(fields.get(i).getText()));
+					//						break;
+					//					}
 				}
 			}
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-	return true; //unnnecessary
-}
-
-public boolean updateNotificationPanel() {
-
-	return false;
-}
-
-static class OrdersCell extends ListCell<String> {
-	HBox hbox = new HBox();
-	Label label = new Label("(empty)");
-	Pane pane = new Pane();
-	Image checkmark = new Image(getClass().getResourceAsStream("checkmark.png"));
-	ImageView imageView = new ImageView(checkmark);
-	Button button = new Button();
-
-	public OrdersCell() {
-		super();
-		hbox.getChildren().addAll(label, pane, button);
-		HBox.setHgrow(pane, Priority.ALWAYS);
-		imageView.setFitWidth(20);
-		imageView.setFitHeight(20);
-		button.setId("listButton");
-		button.setGraphic(imageView);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				// TODO set order to complete and update listview
-				System.out.println(getItem());
-			}
-		});
+		return true; //unnnecessary
 	}
 
-	@Override
-	protected void updateItem(String item, boolean empty) {
-		super.updateItem(item, empty);
-		setText(null);  // No text in label of super class
-		if (empty) {
-			setGraphic(null);
-		} else {
-			label.setText(item!=null ? item : "<null>");
-			setGraphic(hbox);
+	public boolean updateNotificationPanel() {
+
+		return false;
+	}
+
+	static class OrdersCell extends ListCell<String> {
+		HBox hbox = new HBox();
+		Label label = new Label("(empty)");
+		Pane pane = new Pane();
+		Image checkmark = new Image(getClass().getResourceAsStream("checkmark.png"));
+		ImageView imageView = new ImageView(checkmark);
+		Button button = new Button();
+
+		public OrdersCell() {
+			super();
+			hbox.getChildren().addAll(label, pane, button);
+			HBox.setHgrow(pane, Priority.ALWAYS);
+			imageView.setFitWidth(20);
+			imageView.setFitHeight(20);
+			button.setId("listButton");
+			button.setGraphic(imageView);
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					// TODO set order to complete and update listview
+					System.out.println(getItem());
+				}
+			});
+		}
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			setText(null);  // No text in label of super class
+			if (empty) {
+				setGraphic(null);
+			} else {
+				label.setText(item!=null ? item : "<null>");
+				setGraphic(hbox);
+			}
 		}
 	}
-}
 
-static class NotificationsCell extends ListCell<String> {
-	HBox hbox = new HBox();
-	Label label = new Label("(empty)");
-	Pane pane = new Pane();
-	Image delete = new Image(getClass().getResourceAsStream("delete.png"));
-	ImageView imageView = new ImageView(delete);
-	Button button = new Button();
+	static class NotificationsCell extends ListCell<String> {
+		HBox hbox = new HBox();
+		Label label = new Label("(empty)");
+		Pane pane = new Pane();
+		Image delete = new Image(getClass().getResourceAsStream("delete.png"));
+		ImageView imageView = new ImageView(delete);
+		Button button = new Button();
 
-	public NotificationsCell() {
-		super();
-		hbox.getChildren().addAll(label, pane, button);
-		HBox.setHgrow(pane, Priority.ALWAYS);
-		imageView.setFitWidth(20);
-		imageView.setFitHeight(20);
-		button.setId("listButton");
-		button.setGraphic(imageView);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				// TODO remove notification from notifications
-				System.out.println(getItem());
+		public NotificationsCell() {
+			super();
+			hbox.getChildren().addAll(label, pane, button);
+			HBox.setHgrow(pane, Priority.ALWAYS);
+			imageView.setFitWidth(20);
+			imageView.setFitHeight(20);
+			button.setId("listButton");
+			button.setGraphic(imageView);
+			button.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					// TODO remove notification from notifications
+					System.out.println(getItem());
+				}
+			});
+		}
+
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			setText(null);  // No text in label of super class
+			if (empty) {
+				setGraphic(null);
+			} else {
+				label.setText(item!=null ? item : "<null>");
+				setGraphic(hbox);
 			}
-		});
-	}
-
-	@Override
-	protected void updateItem(String item, boolean empty) {
-		super.updateItem(item, empty);
-		setText(null);  // No text in label of super class
-		if (empty) {
-			setGraphic(null);
-		} else {
-			label.setText(item!=null ? item : "<null>");
-			setGraphic(hbox);
 		}
 	}
-}
 
 }
