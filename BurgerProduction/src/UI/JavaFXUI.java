@@ -119,11 +119,11 @@ public class JavaFXUI extends Application {
 	private Button adjustButton = new Button("Adjust stock");
 
 	StockHandler stockHandler;
+	private List<TextField> fields;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		// TODO Auto-generated method stub
 		try {
 			Scene mainScene = new Scene(root,1200,900);
 			mainScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -144,6 +144,9 @@ public class JavaFXUI extends Application {
 				@Override
 				public void handle(ActionEvent event) {
 					primaryStage.setScene(inventoryScene);
+					try {
+						displayStockLevels();
+					} catch (SQLException e) {e.printStackTrace();}
 				}	
 			});
 
@@ -161,8 +164,11 @@ public class JavaFXUI extends Application {
 						ingredients = stockHandler.retrieveIngredientsFromDB();
 						adjustStock();
 						ingredients = stockHandler.retrieveIngredientsFromDB();
+						displayStockLevels();
+						for (int i=0; i<fields.size(); i++) {
+							fields.get(i).setText("");
+						}
 					} catch (Exception e) {e.printStackTrace();}
-					//Update stock levels
 				}	
 			});
 
@@ -406,14 +412,31 @@ public class JavaFXUI extends Application {
 
 	}
 
-	public boolean displayStockLevels() {
-
-		return false;
+	public void displayStockLevels() throws SQLException {
+		
+		ingredients = stockHandler.retrieveIngredientsFromDB();
+		
+		bunLettuce.setText("Lettuce bun: \t" + ingredients.get(0).getQuantity());
+		bunStandard.setText("Standard bun: \t" + ingredients.get(1).getQuantity());
+		vegeLettuce.setText("Lettuce: \t\t" + ingredients.get(2).getQuantity());
+		vegeTomato.setText("Tomato: \t\t" + ingredients.get(3).getQuantity());
+		vegeOnion.setText("Onion: \t\t" + ingredients.get(4).getQuantity());
+		vegePickles.setText("Pickles: \t\t" + ingredients.get(5).getQuantity());
+		vegeBeetroot.setText("Beetroot: \t\t" + ingredients.get(6).getQuantity());
+		cheeseCheddar.setText("Cheddar cheese: " + ingredients.get(7).getQuantity());
+		cheeseVegan.setText("Vegan cheese: " + ingredients.get(8).getQuantity());
+		pattyBeef.setText("Beef patty: \t" + ingredients.get(9).getQuantity());
+		pattyChicken.setText("Chicken patty: \t" + ingredients.get(10).getQuantity());
+		pattyTofu.setText("Tofu patty: \t" + ingredients.get(11).getQuantity());
+		sauceTomato.setText("Tomato sauce: " + ingredients.get(12).getQuantity());
+		sauceChilli.setText("Chilli sauce: \t" + ingredients.get(13).getQuantity());
+		sauceAioli.setText("Aioli sauce: \t" + ingredients.get(14).getQuantity());
+		
 	}
 
 	public void adjustStock() {
 
-		List<TextField> fields = new ArrayList<>();
+		fields = new ArrayList<>();
 		fields.add(bunLettuceField);
 		fields.add(bunStandardField);
 		fields.add(vegeLettuceField);
@@ -433,7 +456,7 @@ public class JavaFXUI extends Application {
 		try {
 			for (int i=0; i<fields.size(); i++) {
 				if (!fields.get(i).getText().trim().isEmpty()) {
-					stockHandler.addStockToDB(ingredients.get(i), Integer.parseInt(fields.get(i).getText()));
+					stockHandler.adjustQuantitiesInDB(ingredients.get(i), Integer.parseInt(fields.get(i).getText()));
 				}
 			}
 		} catch (SQLException e) {
@@ -443,7 +466,7 @@ public class JavaFXUI extends Application {
 	}
 
 	public boolean updateNotificationPanel() {
-
+		//TODO future
 		return false;
 	}
 
@@ -504,7 +527,7 @@ public class JavaFXUI extends Application {
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					// TODO remove notification from notifications
+					//Remove notification from notifications
 					System.out.println(getItem());
 				}
 			});
