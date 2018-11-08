@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import handlers.StockHandler;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -127,10 +128,14 @@ public class JavaFXUI extends Application {
 			Scene inventoryScene = new Scene(inventoryRoot,1200,900);
 			inventoryScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
+			StockHandler stockHandler = new StockHandler();
+			
 			//Sets up main UI elements
 			initialiseMainElements();	
 			//Sets up inventory UI elements
 			initialiseInventoryElements();
+			
+			ingredients = stockHandler.retrieveIngredientsFromDB();
 			
 			inventoryFunctions.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
