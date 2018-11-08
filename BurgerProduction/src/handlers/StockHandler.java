@@ -47,7 +47,7 @@ public class StockHandler {
 		String ingredientName = null;
 		int quantity = 0;
 		ingredientsList = new ArrayList<>();
-		String query = "select name, quantity from stock_ingredients"; //returns all stock within stock_ingredients table
+		String query = "select name, quantity from stock_ingredients order by orderthiscolumnby asc"; //returns all stock within stock_ingredients table
 
 		Connection connection = connectToDB(databaseUser, databasePass);
 
@@ -70,6 +70,9 @@ public class StockHandler {
 //			ingredientName = ingredientTitle + " " + ingredientType;
 
 			Ingredient ingredient = new Ingredient(ingredientName, quantity);
+			
+			System.out.println(ingredientName);
+			System.out.println(quantity);
 
 			ingredientsList.add(ingredient);
 
@@ -81,11 +84,13 @@ public class StockHandler {
 		return ingredientsList;
 	}
 
-	public int addStockToDB(Ingredient ingredient, int givenQuantity) throws SQLException{ //adds a current type of ingredient to database takes in quantity and ingredient object
-		int currentQuantity = checkCurrentStockLevels(ingredient);
+	public int addStockToDB(Ingredient ingredient, int givenQuantity)throws SQLException{ //adds a current type of ingredient to database takes in quantity and ingredient object
+		int currentQuantity = checkCurrentStockLevels(ingredient); 
 		int newQuantity;
 		String requiredIngredientName = ingredient.getName();
-		String sqlUpdate = "update stock_ingredients set quantity = quantity + " + givenQuantity + " where name = " + "'" + requiredIngredientName + "'"; //find correct syntax for increasing the quantity by x amount
+		String sqlUpdate = "update stock_ingredients set quantity = quantity + " + givenQuantity + " where name = " + "'" + requiredIngredientName + "''";
+			
+		//find correct syntax for increasing the quantity by x amount
 
 		Connection connection = connectToDB(databaseUser, databasePass);
 
@@ -163,7 +168,7 @@ public class StockHandler {
 		StockHandler s = new StockHandler();
 		Ingredient i = new Ingredient("Bun_Lettuce", 1);
 
-		s.removeIngredientFromDB(i, i.getQuantity());
+		s.retrieveIngredientsFromDB();
 
 	}
 
