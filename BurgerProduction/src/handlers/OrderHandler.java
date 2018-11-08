@@ -19,8 +19,8 @@ import productiionLineDataClasses.Ingredient;
 import productiionLineDataClasses.Order;
 
 public class OrderHandler {
-	private String databaseUser = "karannchat";
-	private String databaseUserPass = "123";
+	private String databaseUser = "mapleyhayl";
+	private String databaseUserPass = "pass123";
 
 
 	// global method to connect the jdbc
@@ -70,11 +70,11 @@ public class OrderHandler {
 		rs.close();
 		stmt.close();
 		
-		System.out.println(orderNotCompleteList.size());
-		
-		System.out.println(orderNotCompleteList.get(0).getCustomer().getCustomerName());
-		
-		System.out.println(orderNotCompleteList.get(1).getCustomer().getCustomerName());
+//		System.out.println(orderNotCompleteList.size());
+//		
+//		System.out.println(orderNotCompleteList.get(0).getCustomer().getCustomerName());
+//		
+//		System.out.println(orderNotCompleteList.get(1).getCustomer().getCustomerName());
 
 		return orderNotCompleteList;
 	}

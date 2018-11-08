@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import handlers.OrderHandler;
 import handlers.StockHandler;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -45,15 +46,12 @@ public class JavaFXUI extends Application {
 	private Text orderDetailsText = new Text();
 	private Text inventoryText = new Text();
 
-	private ListView<String> ordersListView;
-
 	private VBox orderDetails;
 	private Text orderIDText;
 	private Text timeStampText;
 	private Text ingredientsText;
 
 	private BorderPane notificationPane;
-	private ListView<String> notifications;
 	private VBox inventoryButton;
 	private Button inventoryFunctions;
 
@@ -117,14 +115,19 @@ public class JavaFXUI extends Application {
 
 	private Button adjustButton = new Button("Adjust stock");
 
-	//Utility
+	//Handlers
 	private StockHandler stockHandler;
+	private OrderHandler orderHandler;
 	
 	//Lists
 	private List<TextField> fields;
 	private Map<Integer, Order> ordersMap;
 	private List<Order> orders;
+	private List<String> orderStrings;
 	private List<Ingredient> ingredients;
+	
+	private ListView<String> ordersListView;
+	private ListView<String> notifications;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -137,11 +140,14 @@ public class JavaFXUI extends Application {
 			inventoryScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			stockHandler = new StockHandler();
+			orderHandler = new OrderHandler();
 
 			//Sets up main UI elements
 			initialiseMainElements();	
 			//Sets up inventory UI elements
 			initialiseInventoryElements();
+			
+			updateOrderPanel();
 
 			ingredients = stockHandler.retrieveIngredientsFromDB();
 
@@ -212,10 +218,6 @@ public class JavaFXUI extends Application {
 
 		//ListView
 		ordersListView = new ListView<>();
-		ordersListView.getItems().addAll("Order #54625", "Order #58965"); 
-		//TODO change this to list of objects  = ObservableList<String> seasonList = FXCollections.<String>observableArrayList("Spring", "Summer", "Fall", "Winter");
-		//Reference global list of orders
-		//ordersListView = new ListView<>(seasonList);
 		ordersListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
 			public ListCell<String> call(ListView<String> param) {
@@ -412,17 +414,24 @@ public class JavaFXUI extends Application {
 
 	}
 
-	public boolean updateOrderPanel() {
-
+	public boolean updateOrderPanel() throws SQLException {
+		
 		//TODO: put in button listener for when "complete order" is pressed 
 		// removes order from front of queue
 
 		//Retrieve list of orders from the database
-//		
-//		orders = new ArrayList<>();
-////		ObservableList<Order> ordersList = FXCollections.<Order>observableArrayList(orders);
-//		
-//		ordersListView = new ListView<>();
+		orders = orderHandler.retrieveOrdersFromDB();
+
+		//Populate list of Strings
+		orderStrings = new ArrayList<>();
+		for (int i=0; i<orders.size(); i++) {
+			orderStrings.add(Integer.toString(orders.get(i).getOrderID()));
+		}
+
+		ObservableList<String> ordersList = FXCollections.<String>observableArrayList(orderStrings);
+
+		ordersListView.getItems().addAll(ordersList);
+		
 //		ordersListView.getItems(ordersList);
 		//Put that list into the listview
 		//Highest number is most recent order
@@ -524,7 +533,7 @@ public class JavaFXUI extends Application {
 			if (empty) {
 				setGraphic(null);
 			} else {
-				label.setText(item!=null ? item : "<null>");
+				label.setText(item!=null ? "Order #" + item : "<null>");
 				setGraphic(hbox);
 			}
 		}
