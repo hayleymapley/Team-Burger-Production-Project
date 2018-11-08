@@ -124,7 +124,6 @@ public class JavaFXUI extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		// TODO Auto-generated method stub
 		try {
 			Scene mainScene = new Scene(root,1200,900);
 			mainScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -467,7 +466,7 @@ public class JavaFXUI extends Application {
 	}
 
 	public boolean updateNotificationPanel() {
-
+		//TODO future
 		return false;
 	}
 
@@ -528,7 +527,7 @@ public class JavaFXUI extends Application {
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					// TODO remove notification from notifications
+					//Remove notification from notifications
 					System.out.println(getItem());
 				}
 			});
