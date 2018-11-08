@@ -41,9 +41,9 @@ public class StockHandler {
 	}
 
 	public List<Ingredient> retrieveIngredientsFromDB() throws SQLException { 
-		String[] ingredientNameSplit = null;
-		String ingredientType = null;
-		String ingredientTitle = null;
+//		String[] ingredientNameSplit = null;
+//		String ingredientType = null;
+//		String ingredientTitle = null;
 		String ingredientName = null;
 		int quantity = 0;
 		ingredientsList = new ArrayList<>();
@@ -57,17 +57,17 @@ public class StockHandler {
 
 		while(rs.next()) {
 
-			String name = rs.getString("name");
+			ingredientName = rs.getString("name");
 
-			ingredientNameSplit  = name.split("_");
+//			ingredientNameSplit  = name.split("_");
 
 			quantity = rs.getInt("quantity");
 
-			ingredientType = ingredientNameSplit[0].toString();
-
-			ingredientTitle = ingredientNameSplit[1].toString();
-
-			ingredientName = ingredientTitle + " " + ingredientType;
+//			ingredientType = ingredientNameSplit[0].toString();
+//
+//			ingredientTitle = ingredientNameSplit[1].toString();
+//
+//			ingredientName = ingredientTitle + " " + ingredientType;
 
 			Ingredient ingredient = new Ingredient(ingredientName, quantity);
 
