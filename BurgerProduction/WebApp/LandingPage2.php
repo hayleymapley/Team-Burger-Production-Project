@@ -1,7 +1,7 @@
  <?php
 $dbconn3 = pg_connect("host=db.ecs.vuw.ac.nz dbname=yauloui_jdbc user=yauloui password=pass123")
 or die("Can't connect to database".pg_last_error());
-//connect to a database named "mary" on the host "sheep" with a username and password
+//connect to a database named "mary" on the host "sheep" with a username and password...
 
 $result = pg_query($dbconn3,"SELECT * FROM stock_ingredients");
 
