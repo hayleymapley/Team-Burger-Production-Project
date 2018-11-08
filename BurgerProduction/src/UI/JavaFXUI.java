@@ -489,7 +489,7 @@ public class JavaFXUI extends Application {
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					// TODO set order to complete and update listview
+					//Set order to complete and update listview
 					System.out.println(getItem());
 				}
 			});
