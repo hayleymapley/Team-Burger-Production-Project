@@ -128,7 +128,7 @@ public class JavaFXUI extends Application {
 			
 			//Sets up main UI elements
 			initialiseMainElements();	
-			
+			//Sets up inventory UI elements
 			initialiseInventoryElements();
 			
 			inventoryFunctions.setOnAction(new EventHandler<ActionEvent>() {
@@ -208,7 +208,7 @@ public class JavaFXUI extends Application {
 		orderDetails.getChildren().addAll(orderIDText, timeStampText, ingredientsText);
 		
 		//Notifcation ListView
-		notifications = new ListView();
+		notifications = new ListView<>();
 		notifications.getItems().addAll("Stock is low", "Also stock is low");
 		notifications.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
