@@ -88,7 +88,7 @@ public class StockHandler {
 		int currentQuantity = checkCurrentStockLevels(ingredient); 
 		int newQuantity;
 		String requiredIngredientName = ingredient.getName();
-		String sqlUpdate = "update stock_ingredients set quantity = quantity + " + givenQuantity + " where name = " + "'" + requiredIngredientName + "''";
+		String sqlUpdate = "update stock_ingredients set quantity = quantity + " + givenQuantity + " where name = " + "'" + requiredIngredientName + "'";
 			
 		//find correct syntax for increasing the quantity by x amount
 
