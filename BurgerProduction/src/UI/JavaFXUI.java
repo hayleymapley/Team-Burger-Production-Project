@@ -1,5 +1,6 @@
 package UI;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -142,6 +143,14 @@ public class JavaFXUI extends Application {
 				@Override
 				public void handle(ActionEvent event) {
 					primaryStage.setScene(mainScene);
+				}	
+			});
+			
+			adjustButton.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					adjustStock();
+					//Update stock levels
 				}	
 			});
 			
@@ -390,7 +399,51 @@ public class JavaFXUI extends Application {
 		return false;
 	}
 	
-	public boolean receiptInStock() {
+	public boolean adjustStock() {
+		
+//		int bunLettuceQty = Integer.parseInt(bunLettuceField.getText());
+//		int bunStandardQty = Integer.parseInt(bunStandardField.getText());
+//		int vegeLettuceQty = Integer.parseInt(vegeLettuceField.getText());
+//		int vegeTomatoQty = Integer.parseInt(vegeTomatoField.getText());
+//		vegeOnionField.getText();
+//		vegePicklesField.getText();
+//		vegeBeetrootField.getText();
+//		cheeseCheddarField.getText();
+//		cheeseVeganField.getText();
+//		pattyBeefField.getText();
+//		pattyChickenField.getText();
+//		pattyTofuField.getText();
+//		sauceTomatoField.getText();
+//		sauceChilliField.getText();
+//		sauceAioliField.getText();
+		
+		List<TextField> fields = new ArrayList<>();
+		fields.add(bunLettuceField);
+		fields.add(bunStandardField);
+		fields.add(vegeLettuceField);
+		fields.add(vegeTomatoField);
+		fields.add(vegeOnionField);
+		fields.add(vegePicklesField);
+		fields.add(vegeBeetrootField);
+		fields.add(cheeseCheddarField);
+		fields.add(cheeseVeganField);
+		fields.add(pattyBeefField);
+		fields.add(pattyChickenField);
+		fields.add(pattyTofuField);
+		fields.add(sauceTomatoField);
+		fields.add(sauceChilliField);
+		fields.add(sauceAioliField);
+		
+		for (int i=0; i<fields.size(); i++) {
+			if (!fields.get(i).getText().trim().isEmpty()) {
+				switch (i) {
+				case 0:
+					System.out.println("Lettuce Bun");
+					break;
+				}
+			}
+		}
+		
 		
 		return false;
 	}
