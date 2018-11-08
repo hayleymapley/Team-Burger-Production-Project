@@ -14,7 +14,7 @@ import productiionLineDataClasses.Ingredient;
 public class StockHandler {
 
 	private List<Ingredient> ingredientsList;
-	private final static String databaseUser = "poperere";
+	private final static String databaseUser = "mapleyhayl";
 	private final static String databasePass = "pass123";
 
 	//goes to DB and returns list of ingredients for UI
@@ -71,8 +71,8 @@ public class StockHandler {
 
 			Ingredient ingredient = new Ingredient(ingredientName, quantity);
 			
-			System.out.println(ingredientName);
-			System.out.println(quantity);
+//			System.out.println(ingredientName);
+//			System.out.println(quantity);
 
 			ingredientsList.add(ingredient);
 
@@ -84,7 +84,7 @@ public class StockHandler {
 		return ingredientsList;
 	}
 
-	public int addStockToDB(Ingredient ingredient, int givenQuantity)throws SQLException{ //adds a current type of ingredient to database takes in quantity and ingredient object
+	public int adjustQuantitiesInDB(Ingredient ingredient, int givenQuantity)throws SQLException{ //adds a current type of ingredient to database takes in quantity and ingredient object
 		int currentQuantity = checkCurrentStockLevels(ingredient); 
 		int newQuantity;
 		String requiredIngredientName = ingredient.getName();
@@ -99,32 +99,6 @@ public class StockHandler {
 		ps.executeUpdate();
 
 		newQuantity = checkCurrentStockLevels(ingredient);
-		
-		System.out.println("Current stock: " + currentQuantity); //print current stock level
-		System.out.println("Adding " + givenQuantity + " to current stock level"); //amount we are adding 
-		System.out.println("New stock level stock: " + newQuantity); //new amount in database
-
-		return newQuantity;
-
-	}
-
-	public int removeIngredientFromDB(Ingredient ingredient, int givenQuantity) throws SQLException { // used to remove specific ingredients from the stock list i.e. if stock is lost/stolen 
-		//givenQuantity = ingredient.getQuantity(); //this will be used if we control burger creation from production line
-		int newQuantity;
-		int currentQuantity = checkCurrentStockLevels(ingredient);
-		String requiredIngredientName = ingredient.getName();
-		String sqlUpdate = "update stock_ingredients set quantity = quantity - " + givenQuantity + " where name = " + "'" + requiredIngredientName + "'"; //find correct syntax for increasing the quantity by x amount
-		Connection connection = connectToDB(databaseUser, databasePass);
-
-		PreparedStatement ps = connection.prepareStatement(sqlUpdate);
-
-		ps.executeUpdate();
-
-		newQuantity = checkCurrentStockLevels(ingredient);
-		
-		System.out.println("Current stock: " + currentQuantity); //print current stock level
-		System.out.println("Removing " + givenQuantity + " to current stock level"); //amount we are removing 
-		System.out.println("New stock level stock: " + newQuantity); //new amount in database
 
 		return newQuantity;
 
@@ -162,14 +136,4 @@ public class StockHandler {
 	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredientsList = ingredients;
 	}
-
-	public static void main(String[] args)  throws SQLException {
-
-		StockHandler s = new StockHandler();
-		Ingredient i = new Ingredient("Bun_Lettuce", 1);
-
-		s.retrieveIngredientsFromDB();
-
-	}
-
 }
