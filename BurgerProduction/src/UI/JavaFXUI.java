@@ -7,6 +7,8 @@ import java.util.Map;
 
 import handlers.StockHandler;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -34,9 +36,6 @@ import productiionLineDataClasses.Ingredient;
 import productiionLineDataClasses.Order;
 
 public class JavaFXUI extends Application {
-
-	Map<String, Order> orders;
-	List<Ingredient> ingredients;
 
 	//Main screen
 	private BorderPane root = new BorderPane();
@@ -118,8 +117,14 @@ public class JavaFXUI extends Application {
 
 	private Button adjustButton = new Button("Adjust stock");
 
-	StockHandler stockHandler;
+	//Utility
+	private StockHandler stockHandler;
+	
+	//Lists
 	private List<TextField> fields;
+	private Map<Integer, Order> ordersMap;
+	private List<Order> orders;
+	private List<Ingredient> ingredients;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -207,7 +212,10 @@ public class JavaFXUI extends Application {
 
 		//ListView
 		ordersListView = new ListView<>();
-		ordersListView.getItems().addAll("Order #54625", "Order #58965");
+		ordersListView.getItems().addAll("Order #54625", "Order #58965"); 
+		//TODO change this to list of objects  = ObservableList<String> seasonList = FXCollections.<String>observableArrayList("Spring", "Summer", "Fall", "Winter");
+		//Reference global list of orders
+		//ordersListView = new ListView<>(seasonList);
 		ordersListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
 			public ListCell<String> call(ListView<String> param) {
@@ -391,6 +399,7 @@ public class JavaFXUI extends Application {
 		//TODO: button listener for when an order is clicked on
 		// inflates the selected view containing an order
 
+		
 		return false;
 
 	}
@@ -405,11 +414,24 @@ public class JavaFXUI extends Application {
 
 	public boolean updateOrderPanel() {
 
-		//TODO: button listener for when "complete order" is pressed 
+		//TODO: put in button listener for when "complete order" is pressed 
 		// removes order from front of queue
 
+		//Retrieve list of orders from the database
+//		
+//		orders = new ArrayList<>();
+////		ObservableList<Order> ordersList = FXCollections.<Order>observableArrayList(orders);
+//		
+//		ordersListView = new ListView<>();
+//		ordersListView.getItems(ordersList);
+		//Put that list into the listview
+		//Highest number is most recent order
+		
+		//TODO list of objects  = ObservableList<String> seasonList = FXCollections.<String>observableArrayList("Spring", "Summer", "Fall", "Winter");
+				//Reference global list of orders
+				//ordersListView = new ListView<>(seasonList);
+		
 		return false;
-
 	}
 
 	public void displayStockLevels() throws SQLException {
