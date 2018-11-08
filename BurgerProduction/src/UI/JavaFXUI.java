@@ -1,5 +1,6 @@
 package UI;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -113,6 +114,8 @@ public class JavaFXUI extends Application {
 	private Label sauceAioliLabel = new Label();
 	private TextField sauceAioliField = new TextField();
 	
+	private Button adjustButton = new Button("Adjust stock");
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -126,7 +129,7 @@ public class JavaFXUI extends Application {
 			
 			//Sets up main UI elements
 			initialiseMainElements();	
-			
+			//Sets up inventory UI elements
 			initialiseInventoryElements();
 			
 			inventoryFunctions.setOnAction(new EventHandler<ActionEvent>() {
@@ -140,6 +143,14 @@ public class JavaFXUI extends Application {
 				@Override
 				public void handle(ActionEvent event) {
 					primaryStage.setScene(mainScene);
+				}	
+			});
+			
+			adjustButton.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					adjustStock();
+					//Update stock levels
 				}	
 			});
 			
@@ -206,7 +217,7 @@ public class JavaFXUI extends Application {
 		orderDetails.getChildren().addAll(orderIDText, timeStampText, ingredientsText);
 		
 		//Notifcation ListView
-		notifications = new ListView();
+		notifications = new ListView<>();
 		notifications.getItems().addAll("Stock is low", "Also stock is low");
 		notifications.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
@@ -264,7 +275,8 @@ public class JavaFXUI extends Application {
 		
 		//Stock Levels
 		inventoryTitle.setText("Stock Levels\n");
-		inventoryTitle.setFont(Font.font(30));
+		inventoryTitle.setId("title");
+		
 		bunLettuce.setText("Lettuce bun: \t0");
 		bunStandard.setText("Standard bun: \t0");
 		vegeLettuce.setText("Lettuce: \t\t0");
@@ -287,21 +299,70 @@ public class JavaFXUI extends Application {
 		inventoryView.setSpacing(5);
 		inventoryView.setPadding(new Insets(25,25,25,25));
 		inventoryView.setAlignment(Pos.TOP_RIGHT);
+		inventoryView.setId("inventoryView");
 		
 		//Stock Adjustment
 		adjustmentTitle.setText("Inventory Adjustment\n");
-		adjustmentTitle.setFont(Font.font(30));
+		adjustmentTitle.setId("title");
 		
-		inventoryAdjustment.getChildren().addAll(adjustmentTitle, bunLettuceField, bunStandardField, vegeLettuceField, 
-				vegeTomatoField, vegeOnionField, vegePicklesField, vegeBeetrootField, cheeseCheddarField, cheeseVeganField,
-				pattyBeefField, pattyChickenField, pattyTofuField, sauceTomatoField, sauceChilliField, sauceAioliField);
+		bunLettuceLabel.setText("Lettuce bun: ");
+		bunStandardLabel.setText("Standard bun: ");
+		vegeLettuceLabel.setText("Lettuce: ");
+		vegeTomatoLabel.setText("Tomato: ");
+		vegeOnionLabel.setText("Onion: ");
+		vegePicklesLabel.setText("Pickles: ");
+		vegeBeetrootLabel.setText("Beetroot: ");
+		cheeseCheddarLabel.setText("Cheddar cheese: ");
+		cheeseVeganLabel.setText("Vegan cheese: ");
+		pattyBeefLabel.setText("Beef patty: ");
+		pattyChickenLabel.setText("Chicken patty: ");
+		pattyTofuLabel.setText("Tofu patty: ");
+		sauceTomatoLabel.setText("Tomato sauce: ");
+		sauceChilliLabel.setText("Chilli sauce: ");
+		sauceAioliLabel.setText("Aioli sauce: ");
+		
+		adjustButton.setId("blue");
+		
+		inventoryAdjustment.getChildren().addAll(adjustmentTitle, bunLettuceLabel, bunLettuceField, bunStandardLabel, bunStandardField, vegeLettuceLabel, vegeLettuceField, 
+				vegeTomatoLabel, vegeTomatoField, vegeOnionLabel, vegeOnionField, vegePicklesLabel, vegePicklesField, vegeBeetrootLabel, vegeBeetrootField, cheeseCheddarLabel, 
+				cheeseCheddarField, cheeseVeganLabel, cheeseVeganField, pattyBeefLabel, pattyBeefField, pattyChickenLabel, pattyChickenField, pattyTofuLabel, pattyTofuField,
+				sauceTomatoLabel, sauceTomatoField, sauceChilliLabel, sauceChilliField, sauceAioliLabel, sauceAioliField, adjustButton);
 		
 		GridPane.setConstraints(adjustmentTitle, 0, 1);
+		GridPane.setConstraints(bunLettuceLabel, 0, 2);
+		GridPane.setConstraints(bunStandardLabel, 0, 3);
+		GridPane.setConstraints(vegeLettuceLabel, 0, 4);
+		GridPane.setConstraints(vegeTomatoLabel, 0, 5);
+		GridPane.setConstraints(vegeOnionLabel, 0, 6);
+		GridPane.setConstraints(vegePicklesLabel, 0, 7);
+		GridPane.setConstraints(vegeBeetrootLabel, 0, 8);
+		GridPane.setConstraints(cheeseCheddarLabel, 0, 9);
+		GridPane.setConstraints(cheeseVeganLabel, 0, 10);
+		GridPane.setConstraints(pattyBeefLabel, 0, 11);
+		GridPane.setConstraints(pattyChickenLabel, 0, 12);
+		GridPane.setConstraints(pattyTofuLabel, 0, 13);
+		GridPane.setConstraints(sauceTomatoLabel, 0, 14);
+		GridPane.setConstraints(sauceChilliLabel, 0, 15);
+		GridPane.setConstraints(sauceAioliLabel, 0, 16);
 		
+		GridPane.setConstraints(bunLettuceField, 1, 2);
+		GridPane.setConstraints(bunStandardField, 1, 3);
+		GridPane.setConstraints(vegeLettuceField, 1, 4);
+		GridPane.setConstraints(vegeTomatoField, 1, 5);
+		GridPane.setConstraints(vegeOnionField, 1, 6);
+		GridPane.setConstraints(vegePicklesField, 1, 7);
+		GridPane.setConstraints(vegeBeetrootField, 1, 8);
+		GridPane.setConstraints(cheeseCheddarField, 1, 9);
+		GridPane.setConstraints(cheeseVeganField, 1, 10);
+		GridPane.setConstraints(pattyBeefField, 1, 11);
+		GridPane.setConstraints(pattyChickenField, 1, 12);
+		GridPane.setConstraints(pattyTofuField, 1, 13);
+		GridPane.setConstraints(sauceTomatoField, 1, 14);
+		GridPane.setConstraints(sauceChilliField, 1, 15);
+		GridPane.setConstraints(sauceAioliField, 1, 16);
+		GridPane.setConstraints(adjustButton, 0, 18);
 		inventoryAdjustment.setPadding(new Insets(25,25,25,25));
-		inventoryAdjustment.setAlignment(Pos.TOP_LEFT);
-		
-		
+
 		inventoryRoot.setTop(inventoryTitleBar);
 		inventoryRoot.setLeft(inventoryView);
 		inventoryRoot.setRight(inventoryAdjustment);
@@ -338,7 +399,51 @@ public class JavaFXUI extends Application {
 		return false;
 	}
 	
-	public boolean receiptInStock() {
+	public boolean adjustStock() {
+		
+//		int bunLettuceQty = Integer.parseInt(bunLettuceField.getText());
+//		int bunStandardQty = Integer.parseInt(bunStandardField.getText());
+//		int vegeLettuceQty = Integer.parseInt(vegeLettuceField.getText());
+//		int vegeTomatoQty = Integer.parseInt(vegeTomatoField.getText());
+//		vegeOnionField.getText();
+//		vegePicklesField.getText();
+//		vegeBeetrootField.getText();
+//		cheeseCheddarField.getText();
+//		cheeseVeganField.getText();
+//		pattyBeefField.getText();
+//		pattyChickenField.getText();
+//		pattyTofuField.getText();
+//		sauceTomatoField.getText();
+//		sauceChilliField.getText();
+//		sauceAioliField.getText();
+		
+		List<TextField> fields = new ArrayList<>();
+		fields.add(bunLettuceField);
+		fields.add(bunStandardField);
+		fields.add(vegeLettuceField);
+		fields.add(vegeTomatoField);
+		fields.add(vegeOnionField);
+		fields.add(vegePicklesField);
+		fields.add(vegeBeetrootField);
+		fields.add(cheeseCheddarField);
+		fields.add(cheeseVeganField);
+		fields.add(pattyBeefField);
+		fields.add(pattyChickenField);
+		fields.add(pattyTofuField);
+		fields.add(sauceTomatoField);
+		fields.add(sauceChilliField);
+		fields.add(sauceAioliField);
+		
+		for (int i=0; i<fields.size(); i++) {
+			if (!fields.get(i).getText().trim().isEmpty()) {
+				switch (i) {
+				case 0:
+					System.out.println("Lettuce Bun");
+					break;
+				}
+			}
+		}
+		
 		
 		return false;
 	}

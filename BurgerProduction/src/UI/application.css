@@ -11,6 +11,20 @@
 	-fx-text-fill: #ff0000;
 }*/
 
+.text-field {
+	-fx-min-width: 10;
+    -fx-min-height: 10;
+    -fx-max-width: 50;
+}
+
+#title {
+	-fx-font-size: 30;
+}
+
+#inventoryView Text {
+	-fx-font-size: 20;
+}
+
 #listButton {
 	-fx-background-color: transparent;
 } 

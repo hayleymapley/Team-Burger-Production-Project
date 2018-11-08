@@ -1,16 +1,18 @@
 package productiionLineDataClasses;
 
+import java.security.Timestamp;
 import java.util.List;
 
 public class Order {
-	
+	private boolean completed;
+	private Timestamp timestamp;
 	private int orderID;
-	
 	private Customer customer;
-	
 	private List<Burger> burgers;
 	
-	public Order(int orderID, Customer customer, List<Burger> burgers) {
+	public Order(boolean completed, Timestamp timestamp, int orderID, Customer customer, List<Burger> burgers) {
+		this.completed =completed;
+		this.timestamp = timestamp;
 		this.orderID = orderID;
 		this.customer = customer;
 		this.burgers = burgers;
@@ -38,6 +40,22 @@ public class Order {
 
 	public void setBurgers(List<Burger> burgers) {
 		this.burgers = burgers;
+	}
+
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
 	}
 	
 
