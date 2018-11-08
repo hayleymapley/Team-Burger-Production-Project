@@ -411,7 +411,7 @@ public class JavaFXUI extends Application {
 		return false;
 	}
 
-	public boolean adjustStock() {
+	public void adjustStock() {
 
 		List<TextField> fields = new ArrayList<>();
 		fields.add(bunLettuceField);
@@ -434,60 +434,12 @@ public class JavaFXUI extends Application {
 			for (int i=0; i<fields.size(); i++) {
 				if (!fields.get(i).getText().trim().isEmpty()) {
 					stockHandler.addStockToDB(ingredients.get(i), Integer.parseInt(fields.get(i).getText()));
-					//					switch (i) {
-					//					case 0:
-					//						stockHandler.addStockToDB(ingredients.get(0), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 1:
-					//						stockHandler.addStockToDB(ingredients.get(1), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 2:
-					//						stockHandler.addStockToDB(ingredients.get(2), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 3:
-					//						stockHandler.addStockToDB(ingredients.get(3), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 4:
-					//						stockHandler.addStockToDB(ingredients.get(4), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 5:
-					//						stockHandler.addStockToDB(ingredients.get(5), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 6:
-					//						stockHandler.addStockToDB(ingredients.get(6), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 7:
-					//						stockHandler.addStockToDB(ingredients.get(7), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 8:
-					//						stockHandler.addStockToDB(ingredients.get(8), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 9:
-					//						stockHandler.addStockToDB(ingredients.get(9), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 10:
-					//						stockHandler.addStockToDB(ingredients.get(10), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 11:
-					//						stockHandler.addStockToDB(ingredients.get(11), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 12:
-					//						stockHandler.addStockToDB(ingredients.get(12), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 13:
-					//						stockHandler.addStockToDB(ingredients.get(13), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					case 14:
-					//						stockHandler.addStockToDB(ingredients.get(14), Integer.parseInt(fields.get(i).getText()));
-					//						break;
-					//					}
 				}
 			}
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-		return true; //unnnecessary
 	}
 
 	public boolean updateNotificationPanel() {
