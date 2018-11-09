@@ -3,6 +3,7 @@ package UI;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -126,11 +127,10 @@ public class JavaFXUI extends Application {
 	//Lists
 	private List<TextField> fields;
 	private static List<Order> orders;
-	private static List<String> orderStrings;
 	private Map<Integer, Order> orderMap;
 	private List<Ingredient> ingredients;
 	
-	private static ListView<String> ordersListView;
+	private static ListView<Order> ordersListView;
 	private ListView<String> notifications;
 
 	@Override
@@ -157,9 +157,9 @@ public class JavaFXUI extends Application {
 			ingredients = stockHandler.retrieveIngredientsFromDB();
 
 			ordersListView.getSelectionModel().selectedItemProperty()
-				.addListener(new ChangeListener<String>() {
+				.addListener(new ChangeListener<Order>() {
 					@Override
-					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					public void changed(ObservableValue<? extends Order> observable, Order oldValue, Order newValue) {
 //						viewOrder(ordersListView.getSelectionModel().getSelectedItem());
 					}
 				});
@@ -231,9 +231,9 @@ public class JavaFXUI extends Application {
 
 		//ListView
 		ordersListView = new ListView<>();
-		ordersListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+		ordersListView.setCellFactory(new Callback<ListView<Order>, ListCell<Order>>() {
 			@Override
-			public ListCell<String> call(ListView<String> param) {
+			public ListCell<Order> call(ListView<Order> param) {
 				return new OrdersCell();
 			}
 		});
@@ -439,15 +439,10 @@ public class JavaFXUI extends Application {
 		//Retrieve list of orders from the database
 		orders = orderHandler.retrieveOrdersFromDB();
 
-		//Populate list of Strings
-		orderStrings = new ArrayList<>();
-		for (int i=0; i<orders.size(); i++) {
-			orderStrings.add(Integer.toString(orders.get(i).getOrderID()));
-		}
+		ObservableList<Order> ordersList = FXCollections.<Order>observableArrayList(orders);
 
-		ObservableList<String> ordersList = FXCollections.<String>observableArrayList(orderStrings);
-
-		Collections.sort(ordersList, Collections.reverseOrder());
+//		Collections.sort(ordersList, Collections.reverseOrder());
+		Collections.sort(ordersList, Comparator.comparingInt(Order::getOrderID).reversed());
 		
 		ordersListView.getItems().addAll(ordersList);
 	}
@@ -510,7 +505,7 @@ public class JavaFXUI extends Application {
 		return false;
 	}
 
-	static class OrdersCell extends ListCell<String> {
+	static class OrdersCell extends ListCell<Order> {
 		HBox hbox = new HBox();
 		Label label = new Label("(empty)");
 		Pane pane = new Pane();
@@ -541,13 +536,13 @@ public class JavaFXUI extends Application {
 		}
 
 		@Override
-		protected void updateItem(String item, boolean empty) {
+		protected void updateItem(Order item, boolean empty) {
 			super.updateItem(item, empty);
 			setText(null);  // No text in label of super class
 			if (empty) {
 				setGraphic(null);
 			} else {
-				label.setText(item!=null ? "Order #" + item : "<null>");
+				label.setText(item!=null ? "Order #" + item.getOrderID() : "<null>");
 				setGraphic(hbox);
 			}
 		}
