@@ -160,7 +160,7 @@ public class JavaFXUI extends Application {
 				.addListener(new ChangeListener<Order>() {
 					@Override
 					public void changed(ObservableValue<? extends Order> observable, Order oldValue, Order newValue) {
-//						viewOrder(ordersListView.getSelectionModel().getSelectedItem());
+						viewOrder(ordersListView.getSelectionModel().getSelectedItem());
 					}
 				});
 			
