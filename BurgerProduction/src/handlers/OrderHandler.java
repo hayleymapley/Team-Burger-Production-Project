@@ -94,7 +94,7 @@ public class OrderHandler {
 		ResultSetMetaData rsmd = burgerResult.getMetaData();
 		while (burgerResult.next()) {
 
-			for(int i = 2; i <= 17; i++) {
+			for(int i = 3; i <= 17; i++) {
 				if(burgerResult.getInt(i) != 0) {
 
 					ingredientQuantity = burgerResult.getInt(i);

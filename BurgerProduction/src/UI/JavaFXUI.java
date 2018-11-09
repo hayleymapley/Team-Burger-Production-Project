@@ -9,6 +9,8 @@ import java.util.Map;
 import handlers.OrderHandler;
 import handlers.StockHandler;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,6 +52,7 @@ public class JavaFXUI extends Application {
 	private VBox orderDetails;
 	private Text orderIDText;
 	private Text timeStampText;
+	private Text customerText;
 	private Text ingredientsText;
 
 	private BorderPane notificationPane;
@@ -122,9 +125,9 @@ public class JavaFXUI extends Application {
 	
 	//Lists
 	private List<TextField> fields;
-	private Map<Integer, Order> ordersMap;
 	private static List<Order> orders;
 	private static List<String> orderStrings;
+	private Map<Integer, Order> orderMap;
 	private List<Ingredient> ingredients;
 	
 	private static ListView<String> ordersListView;
@@ -149,9 +152,18 @@ public class JavaFXUI extends Application {
 			initialiseInventoryElements();
 			
 			updateOrderPanel();
+			if (orders.get(0) != null) viewOrder(orders.get(0));
 
 			ingredients = stockHandler.retrieveIngredientsFromDB();
 
+			ordersListView.getSelectionModel().selectedItemProperty()
+				.addListener(new ChangeListener<String>() {
+					@Override
+					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//						viewOrder(ordersListView.getSelectionModel().getSelectedItem());
+					}
+				});
+			
 			inventoryFunctions.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -232,18 +244,18 @@ public class JavaFXUI extends Application {
 		orderDetails.setPadding(new Insets(15,15,15,15));
 
 		orderIDText = new Text();
-		orderIDText.setText("Order ID: ");
 		orderIDText.setFont(Font.font(30));
 
 		timeStampText = new Text();
-		timeStampText.setText("07/11/18 19:33");
 		timeStampText.setFont(Font.font(15));
+		
+		customerText = new Text();
+		customerText.setFont(Font.font(20));
 
 		ingredientsText = new Text();
-		ingredientsText.setText("\nTomato * 1, Lettuce *1, Tofu * 2");
 		ingredientsText.setFont(Font.font(20));
 
-		orderDetails.getChildren().addAll(orderIDText, timeStampText, ingredientsText);
+		orderDetails.getChildren().addAll(orderIDText, timeStampText, customerText, ingredientsText);
 
 		//Notifcation ListView
 		notifications = new ListView<>();
@@ -397,14 +409,21 @@ public class JavaFXUI extends Application {
 		inventoryRoot.setRight(inventoryAdjustment);
 	}
 
-	public boolean viewOrder(Order order) {
+	public void viewOrder(Order order) {
 
-		//TODO: button listener for when an order is clicked on
 		// inflates the selected view containing an order
-
+		orderIDText.setText("Order #" + Integer.toString(order.getOrderID()));
+		timeStampText.setText(order.getTimestamp().toString());
+		customerText.setText("Customer: " + order.getCustomer().getCustomerName() + "\n");
 		
-		return false;
-
+		List<Ingredient> burgerIngredients = order.getBurgers().get(0).getIngredientsList();
+		List<String> burgerIngredientsStr = new ArrayList<>();
+		for (int i=0; i<burgerIngredients.size(); i++) {
+			burgerIngredientsStr.add(burgerIngredients.get(i).getName() + " * " + burgerIngredients.get(i).getQuantity());
+		}
+		
+		String ingredientsString = String.join("\n", burgerIngredientsStr);
+		ingredientsText.setText(ingredientsString);	//ONLY GETS THE FIRST BURGER OF EACH ORDER
 	}
 
 	public boolean completeOrder() {
