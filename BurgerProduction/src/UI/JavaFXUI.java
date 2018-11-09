@@ -3,8 +3,8 @@ package UI;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import handlers.OrderHandler;
 import handlers.StockHandler;
@@ -122,15 +122,13 @@ public class JavaFXUI extends Application {
 	//Handlers
 	private static StockHandler stockHandler;
 	private static OrderHandler orderHandler;
-	
+
 	//Lists
 	private List<TextField> fields;
-	private static List<Order> orders;
-	private static List<String> orderStrings;
-	private Map<Integer, Order> orderMap;
+	private static List<Order> orders = new ArrayList<>();
 	private List<Ingredient> ingredients;
-	
-	private static ListView<String> ordersListView;
+	private static ObservableList<Order> ordersList;
+	private static ListView<Order> ordersListView;
 	private ListView<String> notifications;
 
 	@Override
@@ -150,20 +148,28 @@ public class JavaFXUI extends Application {
 			initialiseMainElements();	
 			//Sets up inventory UI elements
 			initialiseInventoryElements();
-			
+
 			updateOrderPanel();
-			if (orders.get(0) != null) viewOrder(orders.get(0));
+			if (ordersList.get(ordersList.size()-1) != null) {
+				viewOrder(ordersList.get(ordersList.size()-1));
+				ordersListView.getSelectionModel().select(ordersList.size()-1);
+			}
 
 			ingredients = stockHandler.retrieveIngredientsFromDB();
 
 			ordersListView.getSelectionModel().selectedItemProperty()
-				.addListener(new ChangeListener<String>() {
-					@Override
-					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//						viewOrder(ordersListView.getSelectionModel().getSelectedItem());
+			.addListener(new ChangeListener<Order>() {
+				@Override
+				public void changed(ObservableValue<? extends Order> observable, Order oldValue, Order newValue) {
+					if (ordersListView.getSelectionModel().getSelectedItem() != null) {
+						viewOrder(ordersListView.getSelectionModel().getSelectedItem());
+					} else {
+						viewOrder(ordersList.get(ordersList.size()-1));
+						ordersListView.getSelectionModel().select(ordersList.size()-1);
 					}
-				});
-			
+				}
+			});
+
 			inventoryFunctions.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -231,9 +237,9 @@ public class JavaFXUI extends Application {
 
 		//ListView
 		ordersListView = new ListView<>();
-		ordersListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+		ordersListView.setCellFactory(new Callback<ListView<Order>, ListCell<Order>>() {
 			@Override
-			public ListCell<String> call(ListView<String> param) {
+			public ListCell<Order> call(ListView<Order> param) {
 				return new OrdersCell();
 			}
 		});
@@ -248,7 +254,7 @@ public class JavaFXUI extends Application {
 
 		timeStampText = new Text();
 		timeStampText.setFont(Font.font(15));
-		
+
 		customerText = new Text();
 		customerText.setFont(Font.font(20));
 
@@ -415,23 +421,20 @@ public class JavaFXUI extends Application {
 		orderIDText.setText("Order #" + Integer.toString(order.getOrderID()));
 		timeStampText.setText(order.getTimestamp().toString());
 		customerText.setText("Customer: " + order.getCustomer().getCustomerName() + "\n");
-		
+
 		List<Ingredient> burgerIngredients = order.getBurgers().get(0).getIngredientsList();
 		List<String> burgerIngredientsStr = new ArrayList<>();
 		for (int i=0; i<burgerIngredients.size(); i++) {
 			burgerIngredientsStr.add(burgerIngredients.get(i).getName() + " * " + burgerIngredients.get(i).getQuantity());
 		}
-		
+
 		String ingredientsString = String.join("\n", burgerIngredientsStr);
 		ingredientsText.setText(ingredientsString);	//ONLY GETS THE FIRST BURGER OF EACH ORDER
 	}
 
-	public boolean completeOrder() {
+	public static void completeOrder(Order order) throws SQLException {
 
-		//TODO: changes status of order in database to to completed
-
-		return false;
-
+		orderHandler.setOrderToComplete(order);
 	}
 
 	public static void updateOrderPanel() throws SQLException {
@@ -439,23 +442,18 @@ public class JavaFXUI extends Application {
 		//Retrieve list of orders from the database
 		orders = orderHandler.retrieveOrdersFromDB();
 
-		//Populate list of Strings
-		orderStrings = new ArrayList<>();
-		for (int i=0; i<orders.size(); i++) {
-			orderStrings.add(Integer.toString(orders.get(i).getOrderID()));
-		}
+		ordersList = FXCollections.<Order>observableArrayList(orders);
 
-		ObservableList<String> ordersList = FXCollections.<String>observableArrayList(orderStrings);
+		Collections.sort(ordersList, Comparator.comparingInt(Order::getOrderID).reversed());
 
-		Collections.sort(ordersList, Collections.reverseOrder());
-		
+		ordersListView.getItems().clear();
 		ordersListView.getItems().addAll(ordersList);
 	}
 
 	public void displayStockLevels() throws SQLException {
-		
+
 		ingredients = stockHandler.retrieveIngredientsFromDB();
-		
+
 		bunLettuce.setText("Lettuce bun: \t" + ingredients.get(0).getQuantity());
 		bunStandard.setText("Standard bun: \t" + ingredients.get(1).getQuantity());
 		vegeLettuce.setText("Lettuce: \t\t" + ingredients.get(2).getQuantity());
@@ -471,7 +469,7 @@ public class JavaFXUI extends Application {
 		sauceTomato.setText("Tomato sauce: " + ingredients.get(12).getQuantity());
 		sauceChilli.setText("Chilli sauce: \t" + ingredients.get(13).getQuantity());
 		sauceAioli.setText("Aioli sauce: \t" + ingredients.get(14).getQuantity());
-		
+
 	}
 
 	public void adjustStock() {
@@ -510,7 +508,7 @@ public class JavaFXUI extends Application {
 		return false;
 	}
 
-	static class OrdersCell extends ListCell<String> {
+	static class OrdersCell extends ListCell<Order> {
 		HBox hbox = new HBox();
 		Label label = new Label("(empty)");
 		Pane pane = new Pane();
@@ -529,25 +527,24 @@ public class JavaFXUI extends Application {
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					//Set order to complete and update listview
 					try {
+						completeOrder(getItem());
 						updateOrderPanel();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-					System.out.println(getItem());
 				}
 			});
 		}
 
 		@Override
-		protected void updateItem(String item, boolean empty) {
+		protected void updateItem(Order item, boolean empty) {
 			super.updateItem(item, empty);
 			setText(null);  // No text in label of super class
 			if (empty) {
 				setGraphic(null);
 			} else {
-				label.setText(item!=null ? "Order #" + item : "<null>");
+				label.setText(item!=null ? "Order #" + item.getOrderID() : "<null>");
 				setGraphic(hbox);
 			}
 		}
