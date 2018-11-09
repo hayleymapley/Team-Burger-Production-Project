@@ -1,15 +1,6 @@
 #titleBar {
 	-fx-background-color: #336699;
 }
-/*
-#ordersList .OrdersCell {
-	-fx-alignment: center;
-	-fx-font-size: 20.0;
-}*/
-/*
-#notificationsList .NotificationsCell {
-	-fx-text-fill: #ff0000;
-}*/
 
 .text-field {
 	-fx-min-width: 10;
