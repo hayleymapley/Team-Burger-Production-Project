@@ -126,10 +126,12 @@ public class JavaFXUI extends Application {
 	//Lists
 	private List<TextField> fields;
 	private static List<Order> orders = new ArrayList<>();
-	private List<Ingredient> ingredients;
+	private static List<Ingredient> ingredients;
 	private static ObservableList<Order> ordersList;
 	private static ListView<Order> ordersListView;
-	private ListView<String> notifications;
+	private static ListView<String> notificationsListView;
+	private static List<String> notifications = new ArrayList<>();
+	private static ObservableList<String> notificationsList;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -154,6 +156,8 @@ public class JavaFXUI extends Application {
 				viewOrder(ordersList.get(ordersList.size()-1));
 				ordersListView.getSelectionModel().select(ordersList.size()-1);
 			}
+			
+			updateNotificationPanel();
 
 			ingredients = stockHandler.retrieveIngredientsFromDB();
 
@@ -184,6 +188,13 @@ public class JavaFXUI extends Application {
 				@Override
 				public void handle(ActionEvent event) {
 					primaryStage.setScene(mainScene);
+					try {
+						updateNotificationPanel();
+						updateOrderPanel();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					
 				}	
 			});
 
@@ -264,9 +275,8 @@ public class JavaFXUI extends Application {
 		orderDetails.getChildren().addAll(orderIDText, timeStampText, customerText, ingredientsText);
 
 		//Notifcation ListView
-		notifications = new ListView<>();
-		notifications.getItems().addAll("Stock is low", "Also stock is low");
-		notifications.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+		notificationsListView = new ListView<>();
+		notificationsListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
 			public ListCell<String> call(ListView<String> param) {
 				return new NotificationsCell();
@@ -292,7 +302,7 @@ public class JavaFXUI extends Application {
 		//Notification Pane
 		notificationPane = new BorderPane();
 		notificationPane.setStyle("-fx-background-color: #A9A9A9;");
-		notificationPane.setTop(notifications);
+		notificationPane.setTop(notificationsListView);
 		notificationPane.setBottom(inventoryButton);
 
 		//BorderPane
@@ -434,7 +444,9 @@ public class JavaFXUI extends Application {
 
 	public static void completeOrder(Order order) throws SQLException {
 
-		orderHandler.setOrderToComplete(order);
+		orderHandler.setOrderToComplete(order); 
+		//TODO call updateOrderPanel from this method
+		updateNotificationPanel();
 	}
 
 	public static void updateOrderPanel() throws SQLException {
@@ -503,9 +515,26 @@ public class JavaFXUI extends Application {
 		}
 	}
 
-	public boolean updateNotificationPanel() {
-		//TODO future
-		return false;
+	public static void checkForStockWarnings() throws SQLException {
+		
+		ingredients = stockHandler.retrieveIngredientsFromDB();
+		
+		for (Ingredient i : ingredients) {
+			if (i.getQuantity() < 30 && !(notifications.contains(i.getName() + " quantity is low"))) {
+				notifications.add(0, i.getName() + " quantity is low");
+			}
+		}
+	}
+	
+	public static void updateNotificationPanel() throws SQLException {
+		
+		checkForStockWarnings();
+		
+		notificationsList = FXCollections.<String>observableArrayList(notifications);
+		
+		notificationsListView.getItems().clear();
+		notificationsListView.getItems().addAll(notificationsList);
+		
 	}
 
 	static class OrdersCell extends ListCell<Order> {
@@ -554,8 +583,8 @@ public class JavaFXUI extends Application {
 		HBox hbox = new HBox();
 		Label label = new Label("(empty)");
 		Pane pane = new Pane();
-		Image delete = new Image(getClass().getResourceAsStream("delete.png"));
-		ImageView imageView = new ImageView(delete);
+		Image exclamation = new Image(getClass().getResourceAsStream("exclamation.png"));
+		ImageView imageView = new ImageView(exclamation);
 		Button button = new Button();
 
 		public NotificationsCell() {
@@ -563,14 +592,14 @@ public class JavaFXUI extends Application {
 			hbox.getChildren().addAll(label, pane, button);
 			HBox.setHgrow(pane, Priority.ALWAYS);
 			imageView.setFitWidth(20);
-			imageView.setFitHeight(20);
+			imageView.setFitHeight(25);
 			button.setId("listButton");
 			button.setGraphic(imageView);
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					//Remove notification from notifications
-					System.out.println(getItem());
+//						notifications.remove(getItem());
+//						updateNotificationPanel();
 				}
 			});
 		}
