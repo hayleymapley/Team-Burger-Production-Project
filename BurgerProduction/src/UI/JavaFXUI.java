@@ -2,6 +2,7 @@ package UI;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -116,17 +117,17 @@ public class JavaFXUI extends Application {
 	private Button adjustButton = new Button("Adjust stock");
 
 	//Handlers
-	private StockHandler stockHandler;
-	private OrderHandler orderHandler;
+	private static StockHandler stockHandler;
+	private static OrderHandler orderHandler;
 	
 	//Lists
 	private List<TextField> fields;
 	private Map<Integer, Order> ordersMap;
-	private List<Order> orders;
-	private List<String> orderStrings;
+	private static List<Order> orders;
+	private static List<String> orderStrings;
 	private List<Ingredient> ingredients;
 	
-	private ListView<String> ordersListView;
+	private static ListView<String> ordersListView;
 	private ListView<String> notifications;
 
 	@Override
@@ -414,10 +415,7 @@ public class JavaFXUI extends Application {
 
 	}
 
-	public boolean updateOrderPanel() throws SQLException {
-		
-		//TODO: put in button listener for when "complete order" is pressed 
-		// removes order from front of queue
+	public static void updateOrderPanel() throws SQLException {
 
 		//Retrieve list of orders from the database
 		orders = orderHandler.retrieveOrdersFromDB();
@@ -430,17 +428,9 @@ public class JavaFXUI extends Application {
 
 		ObservableList<String> ordersList = FXCollections.<String>observableArrayList(orderStrings);
 
+		Collections.sort(ordersList, Collections.reverseOrder());
+		
 		ordersListView.getItems().addAll(ordersList);
-		
-//		ordersListView.getItems(ordersList);
-		//Put that list into the listview
-		//Highest number is most recent order
-		
-		//TODO list of objects  = ObservableList<String> seasonList = FXCollections.<String>observableArrayList("Spring", "Summer", "Fall", "Winter");
-				//Reference global list of orders
-				//ordersListView = new ListView<>(seasonList);
-		
-		return false;
 	}
 
 	public void displayStockLevels() throws SQLException {
@@ -521,6 +511,11 @@ public class JavaFXUI extends Application {
 				@Override
 				public void handle(ActionEvent arg0) {
 					//Set order to complete and update listview
+					try {
+						updateOrderPanel();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 					System.out.println(getItem());
 				}
 			});
