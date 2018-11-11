@@ -152,10 +152,10 @@ public class JavaFXUI extends Application {
 			initialiseInventoryElements();
 
 			updateOrderPanel();
-			if (ordersList.get(ordersList.size()-1) != null) {
-				viewOrder(ordersList.get(ordersList.size()-1));
-				ordersListView.getSelectionModel().select(ordersList.size()-1);
-			}
+//			if (ordersList.get(ordersList.size()-1) != null) {
+//				viewOrder(ordersList.get(ordersList.size()-1));
+//				ordersListView.getSelectionModel().select(ordersList.size()-1);
+//			}
 			
 			updateNotificationPanel();
 
