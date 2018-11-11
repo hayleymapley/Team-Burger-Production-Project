@@ -1,56 +1,26 @@
+
+
 $total = "1";
 
 
- // Banana $4
-
-$('#checkbox1').click(function(){
-    if (this.checked) {
-        $total += 4;
-        $('#total').html( $total );
-    } 
-  
-}) 
-
-// Apple $2
-
-$('#checkbox2').click(function(){
-    if (this.checked) {
-      $total += 2;
-      $('#total').html( $total );
-    }    
-
-
-}) 
-    
-// Biscuit $11
-
-$('#checkbox3').click(function(){
-    if (this.checked) {
-        $total += 11;
-        $('#total1').html( $total );
-    } 
-  
-}) 
-
-// Jam $1
-
-$('#checkbox4').click(function(){
-    if (this.checked) {
-      $total += 1;
-      $('#total').html( $total );
-    }    
-
-}) 
-
 document.getElementById("total1").innerHTML = 5 + 6;
 
-function myFunction() {
+var ingredientsArray = <?php echo json_encode($arr);?>;
+
+for(var i=0; i<ingredientsArray.length; i++){
+    alert(ingredientsArray[i]);
+}
+
+function myFunction(element) {
+	  var id = element;
 	  // Get the checkbox
-	  var checkBox = document.getElementById("bun");
+//	  var checkBox = document.getElementById("Bun_Lettuce");
+	  var checkBox = document.getElementById(id);
 	  // Get the output text
-	  var text = document.getElementById("bun1");
+//	  var text = document.getElementById("Bun_Lettuce1");
+	  var text = document.getElementById(id + "1");
 	  
-	  var total = document.getElementById("total1")
+	  var total = document.getElementById("total1");
 
 	  // If the checkbox is checked, display the output text
 	  if (checkBox.checked == true){
