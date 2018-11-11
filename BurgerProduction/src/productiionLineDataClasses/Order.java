@@ -1,6 +1,7 @@
 package productiionLineDataClasses;
 
-import java.security.Timestamp;
+
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Order {
@@ -12,7 +13,7 @@ public class Order {
 	
 	public Order(boolean completed, Timestamp timestamp, int orderID, Customer customer, List<Burger> burgers) {
 		this.completed =completed;
-		this.timestamp = timestamp;
+		this.setTimestamp(timestamp);
 		this.orderID = orderID;
 		this.customer = customer;
 		this.burgers = burgers;
@@ -42,13 +43,6 @@ public class Order {
 		this.burgers = burgers;
 	}
 
-	public Timestamp getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
-	}
 
 	public boolean isCompleted() {
 		return completed;
@@ -56,6 +50,14 @@ public class Order {
 
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
+	}
+
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 	
 

@@ -2,11 +2,17 @@ package UI;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
+import handlers.OrderHandler;
 import handlers.StockHandler;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -35,9 +41,6 @@ import productiionLineDataClasses.Order;
 
 public class JavaFXUI extends Application {
 
-	Map<String, Order> orders;
-	List<Ingredient> ingredients;
-
 	//Main screen
 	private BorderPane root = new BorderPane();
 
@@ -46,15 +49,13 @@ public class JavaFXUI extends Application {
 	private Text orderDetailsText = new Text();
 	private Text inventoryText = new Text();
 
-	private ListView<String> ordersListView;
-
 	private VBox orderDetails;
 	private Text orderIDText;
 	private Text timeStampText;
+	private Text customerText;
 	private Text ingredientsText;
 
 	private BorderPane notificationPane;
-	private ListView<String> notifications;
 	private VBox inventoryButton;
 	private Button inventoryFunctions;
 
@@ -118,8 +119,19 @@ public class JavaFXUI extends Application {
 
 	private Button adjustButton = new Button("Adjust stock");
 
-	StockHandler stockHandler;
+	//Handlers
+	private static StockHandler stockHandler;
+	private static OrderHandler orderHandler;
+
+	//Lists
 	private List<TextField> fields;
+	private static List<Order> orders = new ArrayList<>();
+	private static List<Ingredient> ingredients;
+	private static ObservableList<Order> ordersList;
+	private static ListView<Order> ordersListView;
+	private static ListView<String> notificationsListView;
+	private static List<String> notifications = new ArrayList<>();
+	private static ObservableList<String> notificationsList;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -132,13 +144,35 @@ public class JavaFXUI extends Application {
 			inventoryScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			stockHandler = new StockHandler();
+			orderHandler = new OrderHandler();
 
 			//Sets up main UI elements
 			initialiseMainElements();	
 			//Sets up inventory UI elements
 			initialiseInventoryElements();
 
+			updateOrderPanel();
+			if (ordersList.get(ordersList.size()-1) != null) {
+				viewOrder(ordersList.get(ordersList.size()-1));
+				ordersListView.getSelectionModel().select(ordersList.size()-1);
+			}
+			
+			updateNotificationPanel();
+
 			ingredients = stockHandler.retrieveIngredientsFromDB();
+
+			ordersListView.getSelectionModel().selectedItemProperty()
+			.addListener(new ChangeListener<Order>() {
+				@Override
+				public void changed(ObservableValue<? extends Order> observable, Order oldValue, Order newValue) {
+					if (ordersListView.getSelectionModel().getSelectedItem() != null) {
+						viewOrder(ordersListView.getSelectionModel().getSelectedItem());
+					} else {
+						viewOrder(ordersList.get(ordersList.size()-1));
+						ordersListView.getSelectionModel().select(ordersList.size()-1);
+					}
+				}
+			});
 
 			inventoryFunctions.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -154,6 +188,13 @@ public class JavaFXUI extends Application {
 				@Override
 				public void handle(ActionEvent event) {
 					primaryStage.setScene(mainScene);
+					try {
+						updateNotificationPanel();
+						updateOrderPanel();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					
 				}	
 			});
 
@@ -207,10 +248,9 @@ public class JavaFXUI extends Application {
 
 		//ListView
 		ordersListView = new ListView<>();
-		ordersListView.getItems().addAll("Order #54625", "Order #58965");
-		ordersListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+		ordersListView.setCellFactory(new Callback<ListView<Order>, ListCell<Order>>() {
 			@Override
-			public ListCell<String> call(ListView<String> param) {
+			public ListCell<Order> call(ListView<Order> param) {
 				return new OrdersCell();
 			}
 		});
@@ -221,23 +261,22 @@ public class JavaFXUI extends Application {
 		orderDetails.setPadding(new Insets(15,15,15,15));
 
 		orderIDText = new Text();
-		orderIDText.setText("Order ID: ");
 		orderIDText.setFont(Font.font(30));
 
 		timeStampText = new Text();
-		timeStampText.setText("07/11/18 19:33");
 		timeStampText.setFont(Font.font(15));
 
+		customerText = new Text();
+		customerText.setFont(Font.font(20));
+
 		ingredientsText = new Text();
-		ingredientsText.setText("\nTomato * 1, Lettuce *1, Tofu * 2");
 		ingredientsText.setFont(Font.font(20));
 
-		orderDetails.getChildren().addAll(orderIDText, timeStampText, ingredientsText);
+		orderDetails.getChildren().addAll(orderIDText, timeStampText, customerText, ingredientsText);
 
 		//Notifcation ListView
-		notifications = new ListView<>();
-		notifications.getItems().addAll("Stock is low", "Also stock is low");
-		notifications.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+		notificationsListView = new ListView<>();
+		notificationsListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
 			public ListCell<String> call(ListView<String> param) {
 				return new NotificationsCell();
@@ -263,7 +302,7 @@ public class JavaFXUI extends Application {
 		//Notification Pane
 		notificationPane = new BorderPane();
 		notificationPane.setStyle("-fx-background-color: #A9A9A9;");
-		notificationPane.setTop(notifications);
+		notificationPane.setTop(notificationsListView);
 		notificationPane.setBottom(inventoryButton);
 
 		//BorderPane
@@ -386,36 +425,47 @@ public class JavaFXUI extends Application {
 		inventoryRoot.setRight(inventoryAdjustment);
 	}
 
-	public boolean viewOrder(Order order) {
+	public void viewOrder(Order order) {
 
-		//TODO: button listener for when an order is clicked on
 		// inflates the selected view containing an order
+		orderIDText.setText("Order #" + Integer.toString(order.getOrderID()));
+		timeStampText.setText(order.getTimestamp().toString());
+		customerText.setText("Customer: " + order.getCustomer().getCustomerName() + "\n");
 
-		return false;
+		List<Ingredient> burgerIngredients = order.getBurgers().get(0).getIngredientsList();
+		List<String> burgerIngredientsStr = new ArrayList<>();
+		for (int i=0; i<burgerIngredients.size(); i++) {
+			burgerIngredientsStr.add(burgerIngredients.get(i).getName() + " * " + burgerIngredients.get(i).getQuantity());
+		}
 
+		String ingredientsString = String.join("\n", burgerIngredientsStr);
+		ingredientsText.setText(ingredientsString);	//ONLY GETS THE FIRST BURGER OF EACH ORDER
 	}
 
-	public boolean completeOrder() {
+	public static void completeOrder(Order order) throws SQLException {
 
-		//TODO: changes status of order in database to to completed
-
-		return false;
-
+		orderHandler.setOrderToComplete(order); 
+		//TODO call updateOrderPanel from this method
+		updateNotificationPanel();
 	}
 
-	public boolean updateOrderPanel() {
+	public static void updateOrderPanel() throws SQLException {
 
-		//TODO: button listener for when "complete order" is pressed 
-		// removes order from front of queue
+		//Retrieve list of orders from the database
+		orders = orderHandler.retrieveOrdersFromDB();
 
-		return false;
+		ordersList = FXCollections.<Order>observableArrayList(orders);
 
+		Collections.sort(ordersList, Comparator.comparingInt(Order::getOrderID).reversed());
+
+		ordersListView.getItems().clear();
+		ordersListView.getItems().addAll(ordersList);
 	}
 
 	public void displayStockLevels() throws SQLException {
-		
+
 		ingredients = stockHandler.retrieveIngredientsFromDB();
-		
+
 		bunLettuce.setText("Lettuce bun: \t" + ingredients.get(0).getQuantity());
 		bunStandard.setText("Standard bun: \t" + ingredients.get(1).getQuantity());
 		vegeLettuce.setText("Lettuce: \t\t" + ingredients.get(2).getQuantity());
@@ -431,7 +481,7 @@ public class JavaFXUI extends Application {
 		sauceTomato.setText("Tomato sauce: " + ingredients.get(12).getQuantity());
 		sauceChilli.setText("Chilli sauce: \t" + ingredients.get(13).getQuantity());
 		sauceAioli.setText("Aioli sauce: \t" + ingredients.get(14).getQuantity());
-		
+
 	}
 
 	public void adjustStock() {
@@ -465,12 +515,29 @@ public class JavaFXUI extends Application {
 		}
 	}
 
-	public boolean updateNotificationPanel() {
-		//TODO future
-		return false;
+	public static void checkForStockWarnings() throws SQLException {
+		
+		ingredients = stockHandler.retrieveIngredientsFromDB();
+		
+		for (Ingredient i : ingredients) {
+			if (i.getQuantity() < 30 && !(notifications.contains(i.getName() + " quantity is low"))) {
+				notifications.add(0, i.getName() + " quantity is low");
+			}
+		}
+	}
+	
+	public static void updateNotificationPanel() throws SQLException {
+		
+		checkForStockWarnings();
+		
+		notificationsList = FXCollections.<String>observableArrayList(notifications);
+		
+		notificationsListView.getItems().clear();
+		notificationsListView.getItems().addAll(notificationsList);
+		
 	}
 
-	static class OrdersCell extends ListCell<String> {
+	static class OrdersCell extends ListCell<Order> {
 		HBox hbox = new HBox();
 		Label label = new Label("(empty)");
 		Pane pane = new Pane();
@@ -489,20 +556,24 @@ public class JavaFXUI extends Application {
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					// TODO set order to complete and update listview
-					System.out.println(getItem());
+					try {
+						completeOrder(getItem());
+						updateOrderPanel();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			});
 		}
 
 		@Override
-		protected void updateItem(String item, boolean empty) {
+		protected void updateItem(Order item, boolean empty) {
 			super.updateItem(item, empty);
 			setText(null);  // No text in label of super class
 			if (empty) {
 				setGraphic(null);
 			} else {
-				label.setText(item!=null ? item : "<null>");
+				label.setText(item!=null ? "Order #" + item.getOrderID() : "<null>");
 				setGraphic(hbox);
 			}
 		}
@@ -512,8 +583,8 @@ public class JavaFXUI extends Application {
 		HBox hbox = new HBox();
 		Label label = new Label("(empty)");
 		Pane pane = new Pane();
-		Image delete = new Image(getClass().getResourceAsStream("delete.png"));
-		ImageView imageView = new ImageView(delete);
+		Image exclamation = new Image(getClass().getResourceAsStream("exclamation.png"));
+		ImageView imageView = new ImageView(exclamation);
 		Button button = new Button();
 
 		public NotificationsCell() {
@@ -521,14 +592,14 @@ public class JavaFXUI extends Application {
 			hbox.getChildren().addAll(label, pane, button);
 			HBox.setHgrow(pane, Priority.ALWAYS);
 			imageView.setFitWidth(20);
-			imageView.setFitHeight(20);
+			imageView.setFitHeight(25);
 			button.setId("listButton");
 			button.setGraphic(imageView);
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					//Remove notification from notifications
-					System.out.println(getItem());
+//						notifications.remove(getItem());
+//						updateNotificationPanel();
 				}
 			});
 		}
