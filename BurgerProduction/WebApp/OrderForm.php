@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-    
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="stylesheet.css" />
         <title>NullBurger | Order Form</title>
         <script type="text/javascript" src="/Users/Kitty/git/burgermakingproject/BurgerProduction/Scripts/WebApp/OrderForm.js"></script>
@@ -80,31 +78,4 @@ function sync()
 </div>
 
 
-        
-<<<<<<< HEAD
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwOWzhFsW-brtgpLHBRALTUnuJOft8sWU&callback=myMap"></script>
-    
-    <br>
-    <br>
-    
-    <center><form>
-    <input class="button" type="button" value="Home" onclick="window.location.href='index.html'" />
-    <input class="button" type="button" value="Our People" onclick="window.location.href='OurPeople.html'" />
-    <input class="button" type="button" value="Pricing" onclick="window.location.href='Pricing.php'" />
-    <input class="button" type="button" value="Contact Us" onclick="window.location.href='ContactUs.php'" />
-    </form>
-    
-    <br>
-    <br>
-    <br>
-    
-    <center><ul class="social-icons">    
-        <li><a href="https://www.linkedin.com/in/caitlin-foley-7b0343b1/"><img src='Linkedin.png'/></a></li>
-    </ul>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    </body>
-=======
-  </body>
->>>>>>> branch 'master' of git@gitlab.ecs.vuw.ac.nz:poperere/burgermakingproject.git
+         </body>

@@ -9,8 +9,6 @@ while ($row = pg_fetch_row($result)) {
     echo "Row: $row[0]";
 }
 
-//echo "$result";
-
 
 ?>
 
@@ -23,7 +21,7 @@ while ($row = pg_fetch_row($result)) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="css/bootstrap.css" rel="stylesheet" />
 <link href="css/bootstrap-theme.css" rel="stylesheet" />
-    <title>Delicious Burger!</title>
+    <title>NullBurger!</title>
   </head>
   <body>
   <div class="container">

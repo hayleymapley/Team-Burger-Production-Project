@@ -17,8 +17,8 @@ import productiionLineDataClasses.Customer;
 import productiionLineDataClasses.Order;
 
 public class OrderHandler {
-	private String databaseUser = "karannchat";
-	private String databaseUserPass = "123";
+	private String databaseUser = "yauloui";
+	private String databaseUserPass = "pass123";
 	private HashMap<Integer, Order> currentOrders;
 
 	// global method to connect the jdbc
