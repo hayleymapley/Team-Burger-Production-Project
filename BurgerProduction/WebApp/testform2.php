@@ -92,7 +92,6 @@ Sauce aioli: <input type="checkbox" id="Sauce_Aioli" onclick="myFunction(this.id
 
 $total = "1";
 
-
 document.getElementById("total1").innerHTML = 5 + 6;
 
 
@@ -121,7 +120,7 @@ function myFunction(element) {
 	    text.style.display = "none";
 	  }
 	}
- </script>
+</script>
 
 
 
