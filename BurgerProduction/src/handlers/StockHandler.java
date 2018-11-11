@@ -14,7 +14,7 @@ import productiionLineDataClasses.Ingredient;
 public class StockHandler {
 
 	private List<Ingredient> ingredientsList;
-	private final static String databaseUser = "yauloui";
+	private final static String databaseUser = "mapleyhayl";
 	private final static String databasePass = "pass123";
 
 	//goes to DB and returns list of ingredients for UI

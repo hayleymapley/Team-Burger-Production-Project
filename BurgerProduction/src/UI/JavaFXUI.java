@@ -152,11 +152,11 @@ public class JavaFXUI extends Application {
 			initialiseInventoryElements();
 
 			updateOrderPanel();
-//			if (ordersList.get(ordersList.size()-1) != null) {
-//				viewOrder(ordersList.get(ordersList.size()-1));
-//				ordersListView.getSelectionModel().select(ordersList.size()-1);
-//			}
-			
+			if (ordersList.get(ordersList.size()-1) != null) {
+				viewOrder(ordersList.get(ordersList.size()-1));
+				ordersListView.getSelectionModel().select(ordersList.size()-1);
+			}
+
 			updateNotificationPanel();
 
 			ingredients = stockHandler.retrieveIngredientsFromDB();
@@ -168,8 +168,10 @@ public class JavaFXUI extends Application {
 					if (ordersListView.getSelectionModel().getSelectedItem() != null) {
 						viewOrder(ordersListView.getSelectionModel().getSelectedItem());
 					} else {
-						viewOrder(ordersList.get(ordersList.size()-1));
-						ordersListView.getSelectionModel().select(ordersList.size()-1);
+						if (ordersList.size()-1 != -1) {
+							viewOrder(ordersList.get(ordersList.size()-1));
+							ordersListView.getSelectionModel().select(ordersList.size()-1);
+						}
 					}
 				}
 			});
@@ -194,7 +196,7 @@ public class JavaFXUI extends Application {
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
-					
+
 				}	
 			});
 
@@ -447,6 +449,8 @@ public class JavaFXUI extends Application {
 		orderHandler.setOrderToComplete(order); 
 		//TODO call updateOrderPanel from this method
 		updateNotificationPanel();
+		updateOrderPanel();
+		
 	}
 
 	public static void updateOrderPanel() throws SQLException {
@@ -516,25 +520,25 @@ public class JavaFXUI extends Application {
 	}
 
 	public static void checkForStockWarnings() throws SQLException {
-		
+
 		ingredients = stockHandler.retrieveIngredientsFromDB();
-		
+
 		for (Ingredient i : ingredients) {
 			if (i.getQuantity() < 30 && !(notifications.contains(i.getName() + " quantity is low"))) {
 				notifications.add(0, i.getName() + " quantity is low");
 			}
 		}
 	}
-	
+
 	public static void updateNotificationPanel() throws SQLException {
-		
+
 		checkForStockWarnings();
-		
+
 		notificationsList = FXCollections.<String>observableArrayList(notifications);
-		
+
 		notificationsListView.getItems().clear();
 		notificationsListView.getItems().addAll(notificationsList);
-		
+
 	}
 
 	static class OrdersCell extends ListCell<Order> {
@@ -598,8 +602,8 @@ public class JavaFXUI extends Application {
 			button.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-//						notifications.remove(getItem());
-//						updateNotificationPanel();
+					//						notifications.remove(getItem());
+					//						updateNotificationPanel();
 				}
 			});
 		}
