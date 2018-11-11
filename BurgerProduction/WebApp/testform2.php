@@ -17,8 +17,25 @@ foreach ($arr as &$value) {
 print_r($value);
     }
 
-
+    //Add new customer row and print just ID
+    //$sql = pg_query($dbconn3,"INSERT INTO customers (name,email) VALUES('john', 'john@example.com')");
+    $query = "SELECT customer_ID FROM customers where email = 'bob@example.com'";
+    $result2 = pg_query($query);
+    if (!$result2) {
+        echo "Problem with query " . $query . "<br/>";
+        echo pg_last_error();
+        exit();
+    }
+    
+    $myrow = pg_fetch_assoc($result2);
+    $customerID = $myrow['customer_id'];
+    //$value2 = $myrow[numofratings];
+    
+    echo "customerID =" . "$customerID <br/>";
 ?>
+
+
+
 
 
 
@@ -26,6 +43,7 @@ print_r($value);
 <!DOCTYPE html>
 <html>
 <!--  <script type="text/javascript" src="main2.js"></script>-->
+
 
 
 
@@ -77,6 +95,11 @@ sauce chilli: <input type="checkbox" id="Sauce_Chilli" onclick="myFunction(this.
 Sauce aioli: <input type="checkbox" id="Sauce_Aioli" onclick="myFunction(this.id)" value="5">
 <p id="Sauce_Aioli1" style="display:none">you selected a patty</p><br>
 
+<form action="">
+<input type="text" id="name" required></input>
+<input type="text" id="email" required></input>
+<button type="submit">Confirm</button>
+</form>
 
 <output id= "total2" >test</output>
 
@@ -92,12 +115,12 @@ document.getElementById("total1").innerHTML = 5 + 6;
 
 var ingredientsArray = <?php echo json_encode($arr);?>;
 var i = 0;
-for(i;i<ingredientsArray.length;i++){
-	var current =  ingredientsArray[i];
-	var name = current.name;
-	var quantity = current.quantity;
-	alert(name.toString()+ " "+ quantity.toString());
-}
+//for(i;i<ingredientsArray.length;i++){
+//	var current =  ingredientsArray[i];
+//	var name = current.name;
+//	var quantity = current.quantity;
+//	alert(name.toString()+ " "+ quantity.toString());
+//}
 
 
 
