@@ -19,8 +19,8 @@ import productiionLineDataClasses.Ingredient;
 import productiionLineDataClasses.Order;
 
 public class OrderHandler {
-	private String databaseUser = "karannchat";
-	private String databaseUserPass = "123";
+	private String databaseUser = "mapleyhayl";
+	private String databaseUserPass = "pass123";
 
 
 	// global method to connect the jdbc
@@ -69,12 +69,6 @@ public class OrderHandler {
 		
 		rs.close();
 		stmt.close();
-		
-		System.out.println(orderNotCompleteList.size());
-		
-		System.out.println(orderNotCompleteList.get(0).getCustomer().getCustomerName());
-		
-		System.out.println(orderNotCompleteList.get(1).getCustomer().getCustomerName());
 
 		return orderNotCompleteList;
 	}
@@ -94,7 +88,7 @@ public class OrderHandler {
 		ResultSetMetaData rsmd = burgerResult.getMetaData();
 		while (burgerResult.next()) {
 
-			for(int i = 2; i <= 17; i++) {
+			for(int i = 3; i <= 17; i++) {
 				if(burgerResult.getInt(i) != 0) {
 
 					ingredientQuantity = burgerResult.getInt(i);
@@ -167,9 +161,6 @@ public class OrderHandler {
 	public void setOrderToComplete(Order order) throws SQLException {
 		// method is called upon when "complete order" button is pressed in UI
 
-		// print out current status of order
-		System.out.println("Check Order status: " + checkOrderStatus(order));
-
 		// updating the order complete
 		int orderId = order.getOrderID();
 		String sql = "UPDATE orders SET completed = 't' WHERE order_id = " + orderId;// change order status to complete
@@ -177,8 +168,6 @@ public class OrderHandler {
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.executeUpdate();
 
-		// print the status after status change
-		System.out.println("Check Order status once update has been completed: " + checkOrderStatus(order));
 	}
 
 	public boolean checkOrderStatus(Order order) throws SQLException {
