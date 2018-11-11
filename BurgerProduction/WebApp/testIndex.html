@@ -1,0 +1,138 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta name="description" content="Custom Burgers">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Burgers</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+      <header>
+      <div id="header">
+              <!-- TOP PANEL IN -->
+        <div id="topLeftLogo">
+              <a href="tbc">   
+              <img id="logoImg" src="logoTbc.png"/>  
+              </a>
+              </div>
+              <!-- Probably not required, placeholded for other functionality... -->
+              <div id="topRightSection">  
+                <section class="popUp">
+                  <button id="login" class="headerLink">Log in?</button><button id="signup" class="headerLink">Sign up?</button>
+                </section>
+              </div>
+              <div id="menu">
+              <a href=#>
+                <!-- Proposed image location...-->
+              <img id="menuImg" src="/images/menu.png"/>
+              </a>
+              </div>
+          </div>
+      </header>
+<div class='main-form'>
+    <section id='user-details'>
+      <!-- Position at bottom of sidebar container-->
+    <div id="popuplogin"> 
+            <form name="login" action="" method="post">
+            <center>Username:</center>
+            <center><input name="username" size="14" /></center>
+            <center>Password?:</center>
+            <center><input name="email" type="email"/></center>
+            <center><input type="submit" name="submit" value="login" /></center>
+            </form>
+            <br />
+            <center><a href="javascript:login('hide');">close</a></center> 
+            </div> 
+          </section>
+            <div class="ingredients-row">
+
+                    <div id="tab0" class="column selection"></div>
+                    <div id="tab1" class="column selection"></div>
+                    <div id="tab2" class="column selection"></div>
+                    <div id="tab3" class="column selection"> </div>
+                    <div id="tab4" class="column selection"></div>
+            </div>
+            <div id="sidebarContainer">
+               <div id="sidebar" class="column sidebar">
+                    <div id="orderHeader">Order</div>
+                      <div id="sidebarInner"></div>
+                        <div id='sidefooter'>
+                          <div id='total'></div>
+                            <button id='addburger'> Add another burger</button>
+                            <button id='submitMe'> Submit Order</button>
+                        </div>
+                </div>
+            </div>
+  </div>
+                          
+                      <footer>
+                                <button id="bunsbtn" class="tablink">Bun</button>
+                                <button id="fillingsbtn" class="tablink">Meat</button>
+                                <button id="toppingsbtn" class="tablink">Salad</button>
+                                <button id="cheesesbtn" class="tablink">Cheese</button>
+                                <button id="saucesbtn" class="tablink">Sauce</button>    
+                      </footer>
+                             
+                              
+                             
+                              
+
+           
+  <div id="loginModal" class="modal">
+    <!-- Modal content  -->
+    <div class="modal-content">
+        <span class="close">&times;</span>        
+      <div class="modal-header">
+        Log in
+      </div>
+      <div class="modal-body">
+        <div id="logintab" class="formsection">
+          <div>
+            <div class="container">
+              <input id="loginname" type="text" placeholder="Enter Username" name="uname" required>
+              <br><input id="loginpassword" type="password" placeholder="Enter Password" name="psw" required>&nbsp;
+              <div class="container">
+                <button id="loginbtn" class="loginbutton" type="submit" OnClick="guesswhosback()">Login</button>
+                <br>
+                <span class="psw"><a href="#">Forgot password</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <!-- Modal window for sign up -->
+  <div id="signupModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close1">&times;</span>        
+      <div class="modal-header">
+        Sign up
+      </div>
+      <div class="modal-body">
+        <div id="signuptab" class="formsection">
+          <div>
+            <div class="container">
+              <input id="nameinput" type="text" placeholder="Enter Name" name="name" required>
+                      
+              <input id="emailinput" type="email" placeholder="Enter Email" name="email" required>
+              <br><input id="passwordinput" type="password" placeholder="Create Password" name="password" required>&nbsp;
+              <div class="container">
+                <button id="signupbtn" class="loginbutton" type="submit" OnClick="hello()">Sign Up</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  </div>
+  <script src="javascript.js"></script>
+  
+</body>
+</html>
