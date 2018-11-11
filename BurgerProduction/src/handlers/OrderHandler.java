@@ -20,7 +20,7 @@ import productiionLineDataClasses.Order;
 public class OrderHandler {
 	private String databaseUser = "yauloui";
 	private String databaseUserPass = "pass123";
-	private HashMap<Integer, Order> currentOrders;
+
 
 	// global method to connect the jdbc
 	private Connection connect() throws SQLException {
@@ -141,16 +141,4 @@ public class OrderHandler {
 		return complete;
 
 	}
-
-	public static void main(String[] args) throws SQLException {
-		OrderHandler o = new OrderHandler();
-		List<Burger> burgers = new ArrayList();
-
-		Customer cx = new Customer(4, "Jeramy", "jeramy@gmail.com");
-
-		//Order orderOne = new Order(4, cx, burgers);
-		o.retrieveOrdersFromDB();
-		// o.setOrderToComplete(orderOne);
-	}
-
 }
