@@ -141,16 +141,4 @@ public class OrderHandler {
 		return complete;
 
 	}
-
-	public static void main(String[] args) throws SQLException {
-		OrderHandler o = new OrderHandler();
-		List<Burger> burgers = new ArrayList();
-
-		Customer cx = new Customer(4, "Jeramy", "jeramy@gmail.com");
-
-		//Order orderOne = new Order(4, cx, burgers);
-		o.retrieveOrdersFromDB();
-		// o.setOrderToComplete(orderOne);
-	}
-
 }
