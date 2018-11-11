@@ -4,7 +4,7 @@ $dbconn3 = pg_connect("host=db.ecs.vuw.ac.nz dbname=yauloui_jdbc user=yauloui pa
 //$dbconn3 = pg_connect("host=localhost dbname=yauloui")
 or die("Can't connect to database".pg_last_error());
 
-$query = "SELECT (name,quantity) FROM stock_ingredients where quantity > 20 ORDER BY orderthiscolumnby asc";
+$query = "SELECT name,quantity FROM stock_ingredients where quantity > 20 ORDER BY orderthiscolumnby asc";
 $result = pg_query($query);
 if (!$result) {
     echo "Problem with query " . $query . "<br/>";
@@ -93,9 +93,9 @@ document.getElementById("total1").innerHTML = 5 + 6;
 var ingredientsArray = <?php echo json_encode($arr);?>;
 var i = 0;
 for(i;i<ingredientsArray.length;i++){
-	var current=  ingredientsArray[i];
-	var name = current[0];
-	var quantity = current[1];
+	var current =  ingredientsArray[i];
+	var name = current.name;
+	var quantity = current.quantity;
 	alert(name.toString()+ " "+ quantity.toString());
 }
 
