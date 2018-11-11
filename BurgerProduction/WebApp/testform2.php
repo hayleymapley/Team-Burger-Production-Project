@@ -14,14 +14,9 @@ if (!$result) {
 $i = "hi";
 $arr = pg_fetch_all($result);
 foreach ($arr as &$value) {
-    
-    //print results as a list/table
-    $row = $value;
-    foreach($row as &$value){
-        echo "row= name, quantity"."<br/>";
-        print_r("row=". $value. "<br/>");
+print_r($value);
     }
-}
+
 
 ?>
 
@@ -97,7 +92,13 @@ document.getElementById("total1").innerHTML = 5 + 6;
 
 
 var ingredientsArray = <?php echo json_encode($arr);?>;
-
+var i = 0;
+for(i;i<ingredientsArray.length;i++){
+	var current=  ingredientsArray[i];
+	var name = current[0];
+	var quantity = current[1];
+	alert(name.toString()+ " "+ quantity.toString());
+}
 
 
 
