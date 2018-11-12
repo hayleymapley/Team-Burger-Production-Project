@@ -39,7 +39,10 @@
 
     <br>
     <br>
+    
+    
 
     <?php require '../Components/Footer/index.php' ?> 
+
 
 </body>
