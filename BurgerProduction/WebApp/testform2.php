@@ -4,6 +4,7 @@ $dbconn3 = pg_connect("host=db.ecs.vuw.ac.nz dbname=yauloui_jdbc user=yauloui pa
 //$dbconn3 = pg_connect("host=localhost dbname=yauloui")
 or die("Can't connect to database".pg_last_error());
 
+//Need logic about displaying out of stock ingredients
 $query = "SELECT name,quantity FROM stock_ingredients where quantity > 20 ORDER BY orderthiscolumnby asc";
 $result = pg_query($query);
 if (!$result) {

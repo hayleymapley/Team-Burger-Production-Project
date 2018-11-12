@@ -5,7 +5,9 @@ error_reporting(E_ALL);
 $name = $_POST['name'];
 $email = $_POST['email'];
 
-
+if (isset($_POST['confirm'])) {
+    createCustomer($name, $email);
+}
 
 function createCustomer($name, $email)
 {
@@ -25,10 +27,6 @@ function createCustomer($name, $email)
     $timestamp = date('Y-m-d G:i:s');
     
     createOrder($customerID, $timestamp);
-}
-
-if (isset($_POST['confirm'])) {
-    createCustomer($name, $email);
 }
 
 function createOrder($customerID, $timestamp)
@@ -76,25 +74,14 @@ function createBurger($orderID){
     $sql = pg_query($dbconn3, "INSERT INTO burger_ingredients (order_id, bun_lettuce, bun_standard, vege_lettuce, vege_tomato, vege_onion, vege_pickles, vege_beetroot, cheese_cheddar, cheese_vegan, patty_beef, patty_chicken, patty_tofu, sauce_tomato, sauce_chilli, sauce_aioli)
            VALUES('$orderID', '$bunLettuce', '$bunStandard', '$vegeLettuce', '$vegeTomato', '$vegeOnion', '$vegePickles', '$vegeBeetroot', '$cheeseCheddar', '$cheeseVegan', '$pattyBeef', '$pattyChicken', '$pattyTofu', '$sauceTomato', '$sauceChilli', '$sauceAioli')");
 
-    $ingredients = array("bun_lettuce", "bun_standard", "vege_lettuce", "vege_tomato", "vege_onion", "vege_pickles", "vege_beetroot", "cheese_cheddar", "cheese_vegan", "patty_beef", "patty_chicken", "patty_tofu", "sauce_tomato", "sauce_chilli", "sauce_aioli");
+    $ingredients = array("Bun_Lettuce", "Bun_Standard", "Vege_Lettuce", "Vege_Tomato", "Vege_Onion", "Vege_Pickles", "Vege_Beetroot", "Cheese_Cheddar", "Cheese_Vegan", "Patty_Beef", "Patty_Chicken", "Patty_Tofu", "Sauce_Tomato", "Sauce_Chilli", "Sauce_Aioli");
     $values = array($bunLettuce, $bunStandard, $vegeLettuce, $vegeTomato, $vegeOnion, $vegePickles, $vegeBeetroot, $cheeseCheddar, $cheeseVegan, $pattyBeef, $pattyChicken, $pattyTofu, $sauceTomato, $sauceChilli, $sauceAioli);
     
     for($i=0; $i<count($ingredients); $i++) {
-        
-        echo $ingredients[$i] . $values[$i] . "<br>";
         $sqlUpdateStock = pg_query($dbconn3, "update stock_ingredients set quantity = quantity - " . $values[$i] . " where name = '" . $ingredients[$i] . "'");
     }
-    
-    
-    
-//     $sqlUpdateStock = pg_query($dbconn3, "update stock_ingredients set quantity = quantity - " . $bunLettuce . " where name = 'Bun_Lettuce'");
-    
 }
-    
-    
-     
 
-
-// header('Location: testform2.php');
+header('Location: testform2.php'); //Change this to confirmation page
 
 ?>
