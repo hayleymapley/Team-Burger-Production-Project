@@ -80,6 +80,23 @@ function createBurger($orderID){
     for($i=0; $i<count($ingredients); $i++) {
         $sqlUpdateStock = pg_query($dbconn3, "update stock_ingredients set quantity = quantity - " . $values[$i] . " where name = '" . $ingredients[$i] . "'");
     }
+    
+    emailConfirmation($orderID);
+}
+
+function emailConfirmation($orderID) {
+    
+    $subject = "Congrats! Your order has been confirmed";
+    $message = "Your order will be ready to pick up in 10mins.\n\nYour confirmation number is: #" . $orderID . "\n\nThanks for ordering with us!";
+    
+    $from = "hmapley@gmail.com";
+    $email = $_POST['email'];
+    $to = $email;
+    $headers = "From: team@nullburger.com";
+    
+    mail($to, $subject, $message, $headers);
+    
+    echo "email sent";
 }
 
 header('Location: testform2.php'); //Change this to confirmation page
