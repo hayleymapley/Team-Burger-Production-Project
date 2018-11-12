@@ -16,22 +16,6 @@ $arr = pg_fetch_all($result);
 foreach ($arr as &$value) {
 print_r($value);
 }
-
-    //Add new customer row and print just ID
-    //$sql = pg_query($dbconn3,"INSERT INTO customers (name,email) VALUES('john', 'john@example.com')");
-    $query = "SELECT customer_ID FROM customers where email = 'bob@example.com'";
-    $result2 = pg_query($query);
-    if (!$result2) {
-        echo "Problem with query " . $query . "<br/>";
-        echo pg_last_error();
-        exit();
-    }
-    
-    $myrow = pg_fetch_assoc($result2);
-    $customerID = $myrow['customer_id'];
-    //$value2 = $myrow[numofratings];
-    
-    echo "customerID =" . "$customerID <br/>";
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +27,6 @@ print_r($value);
 
 <p>Total Cost: $<span id="total"></span></p>
 <output id = "total1" name=total> test</output><br>
-<form action="">
 
 Lettuce Bun: <input type="checkbox" id="Bun_Lettuce"><br>
 
@@ -75,10 +58,10 @@ sauce chilli: <input type="number" id="Sauce_Chilli"><br>
 
 Sauce aioli: <input type="number" id="Sauce_Aioli"><br>
 
-<br>
-<input type="text" id="name" required></input>
-<input type="text" id="email" required></input>
-<button type="submit">Confirm</button>
+<form action="orderConfirm.php" method="post">
+<input type="text" name="name" placeholder="Name" required></input>
+<input type="text" name="email" placeholder="Email" required></input>
+<button name ="confirm" type="submit">Confirm</button>
 
 </form>
 
@@ -103,13 +86,6 @@ var i = 0;
 //	var quantity = current.quantity;
 //	alert(name.toString()+ " "+ quantity.toString());
 //}
-
-
-
-alert(ingredientsArray2.join('\n'));
-
-
-
 
 function myFunction(element) {
 	  var id = element;
