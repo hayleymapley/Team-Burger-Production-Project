@@ -2334,7 +2334,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     transition: all 0.3s ease 0s
 }
 
-
+input:disabled {opacity:0.4;}
 
 .buttonHolder{
 	margin-top:40px;

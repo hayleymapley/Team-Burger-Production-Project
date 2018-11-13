@@ -50,8 +50,8 @@ function createOrder($customerID, $timestamp)
     createBurger($orderID);
 }
 
-function createBurger($orderID){
-    
+function createBurger($orderID)
+{
     $bunLettuce = $_POST['Bun_Lettuce'];
     $bunStandard = $_POST['Bun_Standard'];
     $vegeLettuce = $_POST['Vege_Lettuce'];
@@ -68,24 +68,75 @@ function createBurger($orderID){
     $sauceChilli = $_POST['Sauce_Chilli'];
     $sauceAioli = $_POST['Sauce_Aioli'];
     
-    $dbconn3 = pg_connect("host=db.ecs.vuw.ac.nz dbname=mapleyhayl_jdbc user=mapleyhayl password=pass123") 
-    or die("Can't connect to database" . pg_last_error());
+    
+    if( $bunLettuce == 0 and
+        $bunStandard == 0 and
+        $vegeLettuce == 0 and
+        $vegeTomato == 0 and
+        $vegeOnion == 0 and
+        $vegePickles == 0 and
+        $vegeBeetroot == 0 and
+        $cheeseCheddar == 0 and
+        $cheeseVegan == 0 and
+        $pattyBeef == 0 and
+        $pattyChicken == 0 and
+        $pattyTofu == 0 and
+        $sauceTomato == 0 and
+        $sauceChilli == 0 and
+        $sauceAioli == 0 ){
+        exit();
+    }
+    else{
+    $dbconn3 = pg_connect("host=db.ecs.vuw.ac.nz dbname=mapleyhayl_jdbc user=mapleyhayl password=pass123") or die("Can't connect to database" . pg_last_error());
     
     $sql = pg_query($dbconn3, "INSERT INTO burger_ingredients (order_id, bun_lettuce, bun_standard, vege_lettuce, vege_tomato, vege_onion, vege_pickles, vege_beetroot, cheese_cheddar, cheese_vegan, patty_beef, patty_chicken, patty_tofu, sauce_tomato, sauce_chilli, sauce_aioli)
            VALUES('$orderID', '$bunLettuce', '$bunStandard', '$vegeLettuce', '$vegeTomato', '$vegeOnion', '$vegePickles', '$vegeBeetroot', '$cheeseCheddar', '$cheeseVegan', '$pattyBeef', '$pattyChicken', '$pattyTofu', '$sauceTomato', '$sauceChilli', '$sauceAioli')");
-
-    $ingredients = array("Bun_Lettuce", "Bun_Standard", "Vege_Lettuce", "Vege_Tomato", "Vege_Onion", "Vege_Pickles", "Vege_Beetroot", "Cheese_Cheddar", "Cheese_Vegan", "Patty_Beef", "Patty_Chicken", "Patty_Tofu", "Sauce_Tomato", "Sauce_Chilli", "Sauce_Aioli");
-    $values = array($bunLettuce, $bunStandard, $vegeLettuce, $vegeTomato, $vegeOnion, $vegePickles, $vegeBeetroot, $cheeseCheddar, $cheeseVegan, $pattyBeef, $pattyChicken, $pattyTofu, $sauceTomato, $sauceChilli, $sauceAioli);
     
-    for($i=0; $i<count($ingredients); $i++) {
+    $ingredients = array(
+        "Bun_Lettuce",
+        "Bun_Standard",
+        "Vege_Lettuce",
+        "Vege_Tomato",
+        "Vege_Onion",
+        "Vege_Pickles",
+        "Vege_Beetroot",
+        "Cheese_Cheddar",
+        "Cheese_Vegan",
+        "Patty_Beef",
+        "Patty_Chicken",
+        "Patty_Tofu",
+        "Sauce_Tomato",
+        "Sauce_Chilli",
+        "Sauce_Aioli"
+    );
+    $values = array(
+        $bunLettuce,
+        $bunStandard,
+        $vegeLettuce,
+        $vegeTomato,
+        $vegeOnion,
+        $vegePickles,
+        $vegeBeetroot,
+        $cheeseCheddar,
+        $cheeseVegan,
+        $pattyBeef,
+        $pattyChicken,
+        $pattyTofu,
+        $sauceTomato,
+        $sauceChilli,
+        $sauceAioli
+    );
+    
+    for ($i = 0; $i < count($ingredients); $i ++) {
         $sqlUpdateStock = pg_query($dbconn3, "update stock_ingredients set quantity = quantity - " . $values[$i] . " where name = '" . $ingredients[$i] . "'");
     }
     
     emailConfirmation($orderID);
+    }
 }
 
-function emailConfirmation($orderID) {
-    
+function emailConfirmation($orderID)
+{
     $subject = "Congrats! Your order has been confirmed";
     $message = "Your order will be ready to pick up in 10mins.\n\nYour confirmation number is: #" . $orderID . "\n\nThanks for ordering with us!";
     
@@ -99,6 +150,6 @@ function emailConfirmation($orderID) {
     echo "email sent";
 }
 
-header('Location: index.html#summary'); //Change this to confirmation page
+header('Location: index.html#confirmation'); // Change this to confirmation page
 
 ?>
