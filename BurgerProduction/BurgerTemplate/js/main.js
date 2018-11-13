@@ -46,6 +46,30 @@ function enableConfirm(){
 }
 
 
+﻿var cart = [];
+var totalPrice = 0;
+var currentBurger = 0;
+var burgerNo = document.createElement("div");
+burgerNo.setAttribute("id", "burger" + currentBurger);
+var no = currentBurger;
+var burgerText = document.createElement("p");
+burgerText.appendChild(document.createTextNode("Burger " + (currentBurger + 1)));
+burgerNo.appendChild(burgerText);
+document.getElementById('containerInner').appendChild(burgerNo);
+
+burgerNo.addEventListener('click', function() {
+  currentBurger = no;
+  console.log(currentBurger);
+  for (var i = 1; i < cart.length; i++) {
+	  document.getElementById(('burger' + i)).style.backgroundColor = "#fff)";
+  }
+  document.getElementById(('burger' + no)).style.backgroundColor = "rgba(#fff200)";
+});
+document.getElementById(('burger' + no)).style.backgroundColor = "#fff200";
+document.getElementById('total').innerHTML = "Total: $" + parseFloat((Math.round(totalPrice * 100)) / 100).toFixed(2);
+
+
+
 $(document).ready(function() {
 	"use strict";
 
