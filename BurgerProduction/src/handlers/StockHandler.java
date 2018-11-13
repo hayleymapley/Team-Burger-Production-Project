@@ -36,14 +36,12 @@ public class StockHandler {
 
 			e.printStackTrace();
 		}
-
+		
 		return null; //if connection does not work
 	}
 
 	public List<Ingredient> retrieveIngredientsFromDB() throws SQLException { 
-//		String[] ingredientNameSplit = null;
-//		String ingredientType = null;
-//		String ingredientTitle = null;
+
 		String ingredientName = null;
 		int quantity = 0;
 		ingredientsList = new ArrayList<>();
@@ -59,20 +57,9 @@ public class StockHandler {
 
 			ingredientName = rs.getString("name");
 
-//			ingredientNameSplit  = name.split("_");
-
 			quantity = rs.getInt("quantity");
 
-//			ingredientType = ingredientNameSplit[0].toString();
-//
-//			ingredientTitle = ingredientNameSplit[1].toString();
-//
-//			ingredientName = ingredientTitle + " " + ingredientType;
-
 			Ingredient ingredient = new Ingredient(ingredientName, quantity);
-			
-//			System.out.println(ingredientName);
-//			System.out.println(quantity);
 
 			ingredientsList.add(ingredient);
 
@@ -80,12 +67,13 @@ public class StockHandler {
 
 		rs.close();
 		s.close();
+		connection.close();
 
 		return ingredientsList;
+		
 	}
 
-	public int adjustQuantitiesInDB(Ingredient ingredient, int givenQuantity)throws SQLException{ //adds a current type of ingredient to database takes in quantity and ingredient object
-		int currentQuantity = checkCurrentStockLevels(ingredient); 
+	public int adjustQuantitiesInDB(Ingredient ingredient, int givenQuantity)throws SQLException{ //adds a current type of ingredient to database takes in quantity and ingredient object 
 		int newQuantity;
 		String requiredIngredientName = ingredient.getName();
 		String sqlUpdate = "update stock_ingredients set quantity = quantity + " + givenQuantity + " where name = " + "'" + requiredIngredientName + "'";
@@ -100,6 +88,8 @@ public class StockHandler {
 
 		newQuantity = checkCurrentStockLevels(ingredient);
 
+		connection.close();
+		
 		return newQuantity;
 
 	}
@@ -123,6 +113,8 @@ public class StockHandler {
 
 		rs.close();
 		s.close();
+		
+		connection.close();
 
 		return currentStockLevel;
 
