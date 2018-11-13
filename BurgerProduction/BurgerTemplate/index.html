@@ -40,7 +40,7 @@
 			<div class="container">
 				<div class="row justify-content-center">
 					<div id="logo">
-						<a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
+						<a href="index.html"><img src="img/logo.png" alt="" title=""/></a>
 					</div>
 				</div>
 			</div>
@@ -51,7 +51,7 @@
 					<ul class="nav-menu">
 						<li><a href="index.html">Home</a></li>
 						<li><a href="#menu">Create</a></li>
-						<li><a href="contact.html">Get in touch</a></li>
+						<li><a href="#footer">Get in touch</a></li>
 					</ul>
 				</nav>
 				<!-- #nav-menu-container -->
@@ -168,7 +168,7 @@
 										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
-								<p>Handsliced organic Kosher lacto-fermented dill whole pickle.  Iconic</p>
+								<p>Handsliced organic Kosher lacto-fermented dill whole pickle.  Iconic.</p>
 							</div>
 						</div>
 						<div class="col-md-6 all vegetables">
@@ -212,7 +212,7 @@
 										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
-								<p>A perfectly grilled, locally sourced, 100% pure NZ grass fed organic beef patty</p>
+								<p>A perfectly grilled, locally sourced, 100% pure NZ grass fed organic beef patty.</p>
 							</div>
 						</div>
 						<div class="col-md-6 all protein">
@@ -223,7 +223,7 @@
 										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
-								<p>A succulent, locally sourced, 100% pure NZ free range organic chicken patty</p>
+								<p>A succulent, locally sourced, 100% pure NZ free range organic chicken patty.</p>
 							</div>
 						</div>
 						<div class="col-md-6 all protein">
@@ -234,7 +234,7 @@
 										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
-								<p>Our delicious vegan tofu-pattys are freshly prepared and grilled in-store</p>
+								<p>Our delicious vegan tofu-pattys are freshly prepared and grilled in-store.</p>
 							</div>
 						</div>
 						<div class="col-md-6 all condiments">
@@ -267,7 +267,7 @@
 										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
-								<p>Free range pasteurised egg yolk, crushed garlic and canola oil blended into a thick creamy mayonnaise</p>
+								<p>Free range pasteurised egg yolk, crushed garlic and canola oil blended into a thick creamy mayonnaise.</p>
 							</div>
 						</div>
 					</div>
@@ -285,17 +285,16 @@
 							onblur="this.placeholder = 'Enter email address'"
 							class="common-input mb-20 form-control" required type="email" >
 					</div>
-					<h4 class="price">Your order comes to: $10</h4>
 					<div class="buttonHolder">
-						<a href="#home-about-area section-gap"><input type="submit" id="confirmButton" name="confirm"
-							class="primary-btn" value="Confirm Order" disabled></input></a>
+						<a href="#confirmation" id="confirmButton" 
+							class="primary-btn">submit order</a>
+							<!-- <input type="submit" id="confirmButton" name="confirm"
+							class="primary-btn" value="Submit Order" disabled></input>-->
 					</div>
-			</form>
+			
 		</div>
-
-
-
 	</section>
+	
 	<!-- End menu-area Area -->
 
 	<!-- Start home-about Area -->
@@ -309,18 +308,20 @@
 						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
 						minim veniam, quis nostrud exercitation ullamco laboris nisi ut
 						aliquip ex ea commodo consequat.</p>
-					<a href="#" class="primary-btn" onclick= "enableConfirm()">view full menu</a>
+						<input type="submit" name="confirm" class="primary-btn" onclick="enableConfirm()" value="confirm order"></input>
+				</form>
 				</div>
 				<div class="col-lg-6 home-about-right">
 					<img class="img-fluid" src="img/about-img.jpg" alt="">
 				</div>
 			</div>
 		</div>
+		
 	</section>
 	<!-- End home-about Area -->
 
 	<!-- start footer Area -->
-	<footer class="footer-area">
+	<footer class="footer-area" id="footer">
 		<div class="footer-widget-wrap">
 			<div class="container">
 				<div class="row section-gap">
@@ -340,10 +341,9 @@
 					<div class="col-lg-4  col-md-6 col-sm-6">
 						<div class="single-footer-widget">
 							<h4>Contact Us</h4>
-							<p>56/8, los angeles, rochy beach, Santa monica, United
-								states of america - 1205</p>
+							<p>139 Vivian St, Te Aro, Wellington 6011</p>
 							<p class="number">
-								012-6532-568-9746 <br> 012-6532-569-9748
+								012-6532-569-9748
 							</p>
 						</div>
 					</div>
@@ -379,30 +379,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-		<div class="footer-bottom-wrap">
-			<div class="container">
-				<div
-					class="row footer-bottom d-flex justify-content-between align-items-center">
-					<p class="col-lg-8 col-mdcol-sm-6 -6 footer-text m-0">
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>
-							document.write(new Date().getFullYear());
-						</script>
-						All rights reserved | This template is made with <i
-							class="fa fa-heart-o" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
-					<ul class="col-lg-4 col-mdcol-sm-6 -6 social-icons text-right">
-						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-						<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-						<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-						<li><a href="#"><i class="fa fa-behance"></i></a></li>
-					</ul>
 				</div>
 			</div>
 		</div>
