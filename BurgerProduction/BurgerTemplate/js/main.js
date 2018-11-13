@@ -20,25 +20,15 @@ function enableConfirm(){
 		"Sauce_Aioli"
 		];
 	
-	console.log("disabled button");
-	
 	for(var i =0;i<ingredients.length;i++){
-		
-		console.log(ingredients[i]);
 		
 		var element = document.getElementById(ingredients[i]).value;
 		
-		console.log(element);
-		
 		var elementInt = parseInt(element);
-		
-		console.log(elementInt);
 		
 		if(elementInt > 0){
 			
 			document.getElementById("confirmButton").disabled=false;
-			
-			console.log("enabled button");
 
 		}
 
