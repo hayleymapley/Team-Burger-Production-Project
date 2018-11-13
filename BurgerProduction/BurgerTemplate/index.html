@@ -111,7 +111,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Lettuce Bun</h4>
 									<input type="number" name="Bun_Lettuce" id="Bun_Lettuce" min="0" max="1"
-										onkeydown="return false" value="0" >
+										onkeydown="return false" onclick="enableConfirm()" value="0" >
 								</div>
 								<p>Low-carb, gluten free, au naturale, leafy green goodness.  Nature's bun.
 								</p>
@@ -122,7 +122,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Standard Bun</h4>
 									<input type="number" id ="Bun_Standard" name="Bun_Standard" min="0" max="1"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 								</div>
 								<p>Freshly baked in-store, lightly golden, pillowy soft, sparely sweet.  Our standard bun is a cut above.
 									</p>
@@ -133,7 +133,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Lettuce</h4>
 									<input type="number" id="Vege_Lettuce"name="Vege_Lettuce" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>Locally grown, organic and in-season. Hand picked, fresh-cut lettuce for the discerning palate.</p>
@@ -144,7 +144,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Tomato</h4>
 									<input type="number" name="Vege_Tomato"  id="Vege_Tomato" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>A generous serving of our delicious, lightly roasted 'umami bomb' organic heirloom tomatoes.</p>
@@ -155,7 +155,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Onion</h4>
 									<input type="number" name="Vege_Onion"  id="Vege_Onion"  min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 								</div>
 								<p>Local, organic. Our in-house blend of translucently thin cut red, and caramelized Spanish onion.</p>
 							</div>
@@ -165,7 +165,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Pickles</h4>
 									<input type="number" name="Vege_Pickles" id="Vege_Pickles" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>Handsliced organic Kosher lacto-fermented dill whole pickle.  Iconic</p>
@@ -176,7 +176,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Beetroot</h4>
 									<input type="number" name="Vege_Beetroot" id="Vege_Beetroot" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>Sliced NZ grown and canned beetroot.  An Antipodean classic.</p>
@@ -187,7 +187,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Cheddar</h4>
 									<input type="number" name="Cheese_Cheddar" id="Cheese_Cheddar" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>A perfectly proportioned, hearty slice of classic, melt in your mouth, NZ aged cheddar.</p>
@@ -198,7 +198,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Vegan</h4>
 									<input type="number" name="Cheese_Vegan" id="Cheese_Vegan" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>100% dairy and lactose free. Full flavoured and melt-tastic plant-based goodness.</p>
@@ -209,7 +209,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Beef</h4>
 									<input type="number" name="Patty_Beef" id="Patty_Beef" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>A perfectly grilled, locally sourced, 100% pure NZ grass fed organic beef patty</p>
@@ -220,7 +220,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Chicken</h4>
 									<input type="number" name="Patty_Chicken" id="Patty_Chicken" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>A succulent, locally sourced, 100% pure NZ free range organic chicken patty</p>
@@ -231,7 +231,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Tofu</h4>
 									<input type="number" name="Patty_Tofu" id="Patty_Tofu" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>Our delicious vegan tofu-pattys are freshly prepared and grilled in-store</p>
@@ -242,7 +242,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Tomato Sauce</h4>
 									<input type="number" name="Sauce_Tomato" id="Sauce_Tomato"min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>Anoint your burger creation with a classic dollop of rich, flavourful tomato sauce.</p>
@@ -253,7 +253,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Chilli Sauce</h4>
 									<input type="number" name="Sauce_Chilli" id="Sauce_Chilli" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>For that little extra flavour kick, a dash of locally concocted, organic chilli sauce. </p>
@@ -264,7 +264,7 @@
 								<div class="title-wrap d-flex justify-content-between">
 									<h4>Aioli</h4>
 									<input type="number" name="Sauce_Aioli" id="Sauce_Aioli" min="0" max="5"
-										onkeydown="return false" value="0">
+										onkeydown="return false" onclick="enableConfirm()" value="0">
 
 								</div>
 								<p>Free range pasteurised egg yolk, crushed garlic and canola oil blended into a thick creamy mayonnaise</p>
