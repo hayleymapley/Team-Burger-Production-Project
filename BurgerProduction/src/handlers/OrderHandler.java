@@ -19,8 +19,8 @@ import productiionLineDataClasses.Ingredient;
 import productiionLineDataClasses.Order;
 
 public class OrderHandler {
-	private String databaseUser = "mapleyhayl";
-	private String databaseUserPass = "pass123";
+	private String databaseUser = "karannchat";
+	private String databaseUserPass = "123";
 
 
 	// global method to connect the jdbc
@@ -69,6 +69,7 @@ public class OrderHandler {
 		
 		rs.close();
 		stmt.close();
+		conn.close();
 
 		return orderNotCompleteList;
 	}
@@ -106,6 +107,7 @@ public class OrderHandler {
 
 		burgerResult.close();
 		burgerStatement.close();
+		conn.close();
 
 		return currentBurgersList;
 	}
@@ -113,10 +115,10 @@ public class OrderHandler {
 	public int findCustomerID(int orderID) throws SQLException{ 
 		int customerID = 0;
 
-		Connection connection = connect();
-		Statement statement = connection.createStatement();
+		Connection conn = connect();
+		Statement statement = conn.createStatement();
 		String customerSql = "SELECT customer_id FROM  orders WHERE order_id = "+ orderID;
-		Statement customerStatement= connection.createStatement();
+		Statement customerStatement= conn.createStatement();
 		ResultSet customerResult = statement.executeQuery(customerSql);
 
 		while(customerResult.next()) {
@@ -125,6 +127,7 @@ public class OrderHandler {
 
 		customerResult.close();
 		customerStatement.close();
+		conn.close();
 
 		//find customerID, customer name and email then create Customer object to be returned
 
@@ -135,10 +138,10 @@ public class OrderHandler {
 		String customerName = null;
 		String customerEmail = null;
 
-		Connection connection = connect();
-		Statement statement = connection.createStatement();
+		Connection conn = connect();
+		Statement statement = conn.createStatement();
 		String customerSql = "SELECT * FROM  customers WHERE customer_id = "+ customerID;
-		Statement customerStatement= connection.createStatement();
+		Statement customerStatement= conn.createStatement();
 		ResultSet customerResult = statement.executeQuery(customerSql);
 
 		while(customerResult.next()) {
@@ -150,6 +153,7 @@ public class OrderHandler {
 
 		customerResult.close();
 		customerStatement.close();
+		conn.close();
 
 		return newCustomer;
 	}
@@ -167,6 +171,7 @@ public class OrderHandler {
 		Connection conn = connect();
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.executeUpdate();
+		conn.close();
 
 	}
 
@@ -184,17 +189,12 @@ public class OrderHandler {
 		}
 		rs.close();
 		st.close();
+		conn.close();
 
 		return complete;
 
 	}
 
-	/*public static void main(String[] args) throws SQLException {
-		OrderHandler o = new OrderHandler();
-		o.retrieveOrdersFromDB();
-
-		
-	}*/
 
 }
 
