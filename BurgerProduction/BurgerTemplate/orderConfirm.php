@@ -99,6 +99,6 @@ function emailConfirmation($orderID) {
     echo "email sent";
 }
 
-header('Location: testform2.php'); //Change this to confirmation page
+header('Location: index.html#summary'); //Change this to confirmation page
 
 ?>
