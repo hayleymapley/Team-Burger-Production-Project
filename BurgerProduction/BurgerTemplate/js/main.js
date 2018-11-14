@@ -1,4 +1,3 @@
-
 var ingredients = [
 		"Bun_Lettuce",
 		"Bun_Standard",
@@ -33,41 +32,6 @@ function enableConfirm(){
 	}
 }
 
-
-﻿/*var cart = [];
-var totalPrice = 0;
-var currentBurger = 0;
-var burgerNo = document.createElement("div");
-burgerNo.setAttribute("id", "burger" + currentBurger);
-var no = currentBurger;
-var burgerText = document.createElement("p");
-burgerText.appendChild(document.createTextNode("Ingredients " + (currentBurger + 1)));
-burgerNo.appendChild(burgerText);
-document.getElementById('containerInner').appendChild(burgerNo);
-
-var submit = document.getElementById("submit");
-
-submit.addEventListener('click', function() {
-	//__________________
-console.log("works");
-for(var i =0;i<ingredients.length;i++){
-		var element = document.getElementById(ingredients[i]).value;
-		var elementInt = parseInt(element);
-		if(elementInt > 0){
-			
-		}
-}
-	//____________________		
-  currentBurger = no;
-  console.log(currentBurger);
-  for (var i = 1; i < cart.length; i++) {
-	  document.getElementById(('burger' + i)).style.backgroundColor = "#fff)";
-  }
-  document.getElementById(('burger' + no)).style.backgroundColor = "rgba(#fff200)";
-});
-document.getElementById(('burger' + no)).style.backgroundColor = "#fff200";
-document.getElementById('total').innerHTML = "Total: $" + parseFloat((Math.round(totalPrice * 100)) / 100).toFixed(2);
-*/
 var burgerDiv = document.createElement("div");
 var burgerTitle = document.createElement("li");
 burgerTitle.appendChild(document.createTextNode("Burger Contains: " ));
@@ -81,7 +45,6 @@ for(var i =0;i<ingredients.length;i++){
 		var elementInt = parseInt(element);
 		console.log(elementInt);
 		if(elementInt > 0){
-			//burgerTitle.appendChild(document.createTextNode(ingredients[i]));
 			var ingredient = document.createElement("li");
 			var stringArray = ingredients[i].split("_");
 			var ingredientName = stringArray[1] + " " + stringArray[0] + " * " + elementInt;
@@ -95,26 +58,15 @@ for(var i =0;i<ingredients.length;i++){
 });
 
 
-
-
-
-
-
-
-
 $(document).ready(function() {
 	"use strict";
-
-
 	var window_width = $(window).width(),
 	window_height = window.innerHeight,
 	header_height = $(".default-header").height(),
 	header_height_static = $(".site-header.static").outerHeight(),
 	fitscreen = window_height - header_height;
-
 	$(".fullscreen").css("height", window_height)
 	$(".fitscreen").css("height", fitscreen);
-
 
 	// ------- Datepicker  js --------//  
 
