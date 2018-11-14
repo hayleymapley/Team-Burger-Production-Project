@@ -56,7 +56,7 @@ burgerNo.addEventListener('click', function() {
   document.getElementById(('burger' + no)).style.backgroundColor = "rgba(#fff200)";
 });
 document.getElementById(('burger' + no)).style.backgroundColor = "#fff200";
-document.getElementById('total').innerHTML = "Total: $" + parseFloat((Math.round(totalPrice * 100)) / 100).toFixed(2);
+//document.getElementById('total').innerHTML = "Total: $" + parseFloat((Math.round(totalPrice * 100)) / 100).toFixed(2);
 
 
 
