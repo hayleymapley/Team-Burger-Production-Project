@@ -156,7 +156,7 @@ public class JavaFXUI extends Application {
 			initialiseInventoryElements();
 
 			updateOrderPanel();
-			if (ordersList.get(ordersList.size()-1) != null) {
+			if (!(ordersList.isEmpty()) && ordersList.get(ordersList.size()-1) !=  null) {
 				viewOrder(ordersList.get(ordersList.size()-1));
 				ordersListView.getSelectionModel().select(ordersList.size()-1);
 			}
@@ -172,7 +172,7 @@ public class JavaFXUI extends Application {
 					if (ordersListView.getSelectionModel().getSelectedItem() != null) {
 						viewOrder(ordersListView.getSelectionModel().getSelectedItem());
 					} else {
-						if (ordersList.size()-1 != -1) {
+						if (!(ordersList.isEmpty())) {
 							viewOrder(ordersList.get(ordersList.size()-1));
 							ordersListView.getSelectionModel().select(ordersList.size()-1);
 						}
