@@ -59,6 +59,9 @@ public class JavaFXUI extends Application {
 	private VBox inventoryButton;
 	private Button inventoryFunctions;
 
+	private VBox orderPanelVBox = new VBox();
+	private Button refreshButton = new Button();
+
 	//Inventory Screen
 	private BorderPane inventoryRoot = new BorderPane();
 
@@ -215,6 +218,17 @@ public class JavaFXUI extends Application {
 				}	
 			});
 
+			refreshButton.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					try {
+						updateOrderPanel();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+
 			primaryStage.setTitle("Burger Production Application");
 			primaryStage.setScene(mainScene);
 			primaryStage.show();
@@ -239,11 +253,11 @@ public class JavaFXUI extends Application {
 		orderDetailsText.setFill(Color.WHITE);
 		inventoryText.setText("Notifications");
 		inventoryText.setFont(Font.font(30));
-		inventoryText.setFill(Color.WHITE);
+		inventoryText.setFill(Color.WHITE);	
 
 		//Title bar
 		titleBar.getChildren().addAll(ordersText, orderDetailsText, inventoryText);
-		titleBar.setSpacing(340);
+		titleBar.setSpacing(300);
 		titleBar.setPadding(new Insets(15,15,15,15));
 		titleBar.setAlignment(Pos.CENTER);
 		titleBar.setId("titleBar");
@@ -257,6 +271,16 @@ public class JavaFXUI extends Application {
 			}
 		});
 		ordersListView.setId("ordersList");
+
+		//set graphic refreshButton
+		Image refreshImage= new Image(getClass().getResourceAsStream("refresh.png"));
+		ImageView refreshView = new ImageView(refreshImage);
+		refreshView.setFitWidth(25);
+		refreshView.setFitHeight(25);
+		refreshButton.setGraphic(refreshView);
+		refreshButton.setAlignment(Pos.CENTER);
+
+		orderPanelVBox.getChildren().addAll(ordersListView, refreshButton);
 
 		//Order Details
 		orderDetails = new VBox();
@@ -310,7 +334,7 @@ public class JavaFXUI extends Application {
 		//BorderPane
 		root.setTop(titleBar);
 		root.setCenter(orderDetails);
-		root.setLeft(ordersListView);
+		root.setLeft(orderPanelVBox);
 		root.setRight(notificationPane);
 	}
 
@@ -450,7 +474,7 @@ public class JavaFXUI extends Application {
 		//TODO call updateOrderPanel from this method
 		updateNotificationPanel();
 		updateOrderPanel();
-		
+
 	}
 
 	public static void updateOrderPanel() throws SQLException {
