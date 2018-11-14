@@ -150,6 +150,6 @@ function emailConfirmation($orderID)
     echo "email sent";
 }
 
-header('Location: index.html#confirmation'); // Change this to confirmation page
+header('Location: confirmationPage.html'); // Change this to confirmation page
 
 ?>

@@ -1,8 +1,4 @@
-
-
-function enableConfirm(){
-	
-	var ingredients = [
+var ingredients = [
 		"Bun_Lettuce",
 		"Bun_Standard",
 		"Vege_Lettuce",
@@ -19,6 +15,7 @@ function enableConfirm(){
 		"Sauce_Chilli",
 		"Sauce_Aioli"
 		];
+function enableConfirm(){
 	
 	for(var i =0;i<ingredients.length;i++){
 		
@@ -35,44 +32,41 @@ function enableConfirm(){
 	}
 }
 
-
-﻿var cart = [];
-var totalPrice = 0;
-var currentBurger = 0;
-var burgerNo = document.createElement("div");
-burgerNo.setAttribute("id", "burger" + currentBurger);
-var no = currentBurger;
-var burgerText = document.createElement("p");
-burgerText.appendChild(document.createTextNode("Burger " + (currentBurger + 1)));
-burgerNo.appendChild(burgerText);
-document.getElementById('containerInner').appendChild(burgerNo);
-
-burgerNo.addEventListener('click', function() {
-  currentBurger = no;
-  console.log(currentBurger);
-  for (var i = 1; i < cart.length; i++) {
-	  document.getElementById(('burger' + i)).style.backgroundColor = "#fff)";
-  }
-  document.getElementById(('burger' + no)).style.backgroundColor = "rgba(#fff200)";
+var burgerDiv = document.createElement("div");
+var burgerTitle = document.createElement("li");
+burgerTitle.appendChild(document.createTextNode("Burger Contains: " ));
+burgerDiv.appendChild(burgerTitle);
+document.getElementById("ingredientsList").appendChild(burgerTitle);
+document.getElementById("containerInner").appendChild(burgerDiv);
+var submit = document.getElementById("submit");
+submit.addEventListener('click', function() {
+for(var i =0;i<ingredients.length;i++){
+		var element = document.getElementById(ingredients[i]).value;
+		var elementInt = parseInt(element);
+		console.log(elementInt);
+		if(elementInt > 0){
+			var ingredient = document.createElement("li");
+			var stringArray = ingredients[i].split("_");
+			var ingredientName = stringArray[1] + " " + stringArray[0] + " * " + elementInt;
+			ingredient.appendChild(document.createTextNode(ingredientName));
+			burgerDiv.appendChild(ingredient);
+			document.getElementById("ingredientsList").appendChild(ingredient);
+			
+		}
+			
+		}
 });
-document.getElementById(('burger' + no)).style.backgroundColor = "#fff200";
-document.getElementById('total').innerHTML = "Total: $" + parseFloat((Math.round(totalPrice * 100)) / 100).toFixed(2);
-
 
 
 $(document).ready(function() {
 	"use strict";
-
-
 	var window_width = $(window).width(),
 	window_height = window.innerHeight,
 	header_height = $(".default-header").height(),
 	header_height_static = $(".site-header.static").outerHeight(),
 	fitscreen = window_height - header_height;
-
 	$(".fullscreen").css("height", window_height)
 	$(".fitscreen").css("height", fitscreen);
-
 
 	// ------- Datepicker  js --------//  
 
