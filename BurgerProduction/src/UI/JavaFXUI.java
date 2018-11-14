@@ -56,10 +56,11 @@ public class JavaFXUI extends Application {
 	private Text ingredientsText;
 
 	private BorderPane notificationPane;
-	private VBox inventoryButton;
+	private VBox inventoryVBox;
 	private Button inventoryFunctions;
 
 	private VBox orderPanelVBox = new VBox();
+	private VBox refreshVBox = new VBox();
 	private Button refreshButton = new Button();
 
 	//Inventory Screen
@@ -271,6 +272,7 @@ public class JavaFXUI extends Application {
 			}
 		});
 		ordersListView.setId("ordersList");
+		ordersListView.setPrefHeight(770);
 
 		//set graphic refreshButton
 		Image refreshImage= new Image(getClass().getResourceAsStream("refresh.png"));
@@ -280,7 +282,17 @@ public class JavaFXUI extends Application {
 		refreshButton.setGraphic(refreshView);
 		refreshButton.setAlignment(Pos.CENTER);
 
-		orderPanelVBox.getChildren().addAll(ordersListView, refreshButton);
+		//Refresh VBox
+		refreshVBox.setStyle("-fx-background-color: #A9A9A9;");
+		refreshVBox.setPrefWidth(250);
+		refreshVBox.setPadding(new Insets(15,15,15,15));
+		refreshVBox.setSpacing(5);
+		refreshVBox.setAlignment(Pos.TOP_CENTER);
+
+		refreshVBox.getChildren().add(refreshButton);
+		
+		orderPanelVBox.getChildren().addAll(ordersListView, refreshVBox);
+		orderPanelVBox.setAlignment(Pos.TOP_CENTER);
 
 		//Order Details
 		orderDetails = new VBox();
@@ -308,28 +320,29 @@ public class JavaFXUI extends Application {
 				return new NotificationsCell();
 			}
 		});
-		ordersListView.setId("notificationsList");
+		notificationsListView.setId("notificationsList");
+		notificationsListView.setPrefHeight(770);
 
-		//Inventory Button
-		inventoryButton = new VBox();
-		inventoryButton.setStyle("-fx-background-color: #A9A9A9;");
-		inventoryButton.setPrefWidth(250);
-		inventoryButton.setPadding(new Insets(15,15,15,15));
-		inventoryButton.setSpacing(5);
-		inventoryButton.setAlignment(Pos.TOP_CENTER);
+		//Inventory Box
+		inventoryVBox = new VBox();
+		inventoryVBox.setStyle("-fx-background-color: #A9A9A9;");
+		inventoryVBox.setPrefWidth(250);
+		inventoryVBox.setPadding(new Insets(15,15,15,15));
+		inventoryVBox.setSpacing(5);
+		inventoryVBox.setAlignment(Pos.TOP_CENTER);
 
 		inventoryFunctions = new Button();
 		inventoryFunctions.setPrefWidth(200);
 		inventoryFunctions.setText("Inventory functions");
 		inventoryFunctions.setId("blue");
 
-		inventoryButton.getChildren().addAll(inventoryFunctions);
+		inventoryVBox.getChildren().addAll(inventoryFunctions);
 
 		//Notification Pane
 		notificationPane = new BorderPane();
 		notificationPane.setStyle("-fx-background-color: #A9A9A9;");
 		notificationPane.setTop(notificationsListView);
-		notificationPane.setBottom(inventoryButton);
+		notificationPane.setBottom(inventoryVBox);
 
 		//BorderPane
 		root.setTop(titleBar);
