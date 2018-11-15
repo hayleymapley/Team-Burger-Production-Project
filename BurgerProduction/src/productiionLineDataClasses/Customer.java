@@ -5,6 +5,13 @@ public class Customer {
     private String customerName;
     private String customerEmail;
     
+    /**
+     *  Data class which is used to instantiate an order object
+     * @param customerID int variable
+     * @param customerName String variable
+     * @param customerEmail String variable
+     */
+    
     public Customer(int customerID, String customerName, String customerEmail) {
         this.customerID = customerID;
         this.customerName = customerName;

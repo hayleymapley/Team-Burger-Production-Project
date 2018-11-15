@@ -2,7 +2,12 @@ package productiionLineDataClasses;
 
 import java.util.List;
 
-public class Burger { //comment
+public class Burger { 
+	
+	/**
+	 *  Data class which is used to instantiate an order object
+	 *  List of ingredient objects
+	 */
 	
 	private List<Ingredient> ingredientsList;
 	

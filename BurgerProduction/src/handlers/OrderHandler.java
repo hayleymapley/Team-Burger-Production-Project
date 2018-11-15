@@ -18,12 +18,23 @@ import productiionLineDataClasses.Customer;
 import productiionLineDataClasses.Ingredient;
 import productiionLineDataClasses.Order;
 
+/*
+ * Class responsible for running queries/updates on Postgres sql database using JDBC
+ * Both fields are based on the DB we are using but can be changed as required
+ */
+
 public class OrderHandler {
 	private String databaseUser = "mapleyhayl";
 	private String databaseUserPass = "pass123";
 
 
-	// global method to connect the jdbc
+	/**
+	 * Method used to set up a connection to database to be used in other methods
+	 * @return returns Connection object type 
+	 * @throws SQLException
+	 */
+
+
 	private Connection connect() throws SQLException {
 		Connection connection = null;
 		try {
@@ -37,9 +48,16 @@ public class OrderHandler {
 		}
 		return connection;
 	}
-
+	
+	
+/**
+ * Runs a select query on DB and retrieves orders for java FX GUI  list view
+ * These orders are listed as 'not completed' in the DB
+ * @return List of order objects are returned
+ * @throws SQLException
+ */
 	public List<Order> retrieveOrdersFromDB() throws SQLException { 
-		// goes to DB and retrieves orders for java FX GUI  list view
+		
 		Timestamp orderTS = null;
 		int orderID = 0;
 		boolean orderComplete = false;
@@ -52,15 +70,10 @@ public class OrderHandler {
 		String orderSql = "SELECT * FROM  orders WHERE COMPLETED = 'f' ";
 		ResultSet rs = stmt.executeQuery(orderSql);
 		while (rs.next()) {
-			
 			orderID = rs.getInt("order_id");
-
 			orderTS = rs.getTimestamp("timestamp");
-
-			orderComplete = rs.getBoolean("completed");
-			
-			customerID = findCustomerID(orderID);
-			
+			orderComplete = rs.getBoolean("completed");	
+			customerID = findCustomerID(orderID);	
 			Order newOrder = new Order(orderComplete, orderTS, orderID, findCustomer(customerID),findBurgerIngredients(orderID));
 			
 			orderNotCompleteList.add(newOrder);
@@ -73,6 +86,13 @@ public class OrderHandler {
 
 		return orderNotCompleteList;
 	}
+	
+	/**
+	 * Runs a select query on DB and retrieves a list of burgers that match a given orderID
+	 * @param orderID the specific ID int for a given order
+	 * @return a list of burger objects
+	 * @throws SQLException
+	 */
 
 	public List<Burger> findBurgerIngredients(int orderID) throws SQLException {
 
@@ -111,7 +131,13 @@ public class OrderHandler {
 
 		return currentBurgersList;
 	}
-
+/**
+ * Retrieves a particular customerID int which is used to find a specific customer object
+ * @param orderID int that is given to find a specific customer
+ * @return customer ID int that will be put into a customer object
+ * @throws SQLException
+ */
+	
 	public int findCustomerID(int orderID) throws SQLException{ 
 		int customerID = 0;
 
@@ -133,6 +159,12 @@ public class OrderHandler {
 
 		return customerID;
 	}
+	/**
+	 * Takes a given customerID and returns a customer object with the appropriate fields taken from the database
+	 * @param customerID given customerID intended to be returned from the findCustomerID method
+	 * @return customer object which is a reflection of an entry in the database
+	 * @throws SQLException
+	 */
 
 	public Customer findCustomer(int customerID) throws SQLException{ 
 		String customerName = null;
@@ -158,12 +190,16 @@ public class OrderHandler {
 		return newCustomer;
 	}
 
-	//find customerID, customer name and email then create Customer object to be returned
-
+	
+/**
+ * Takes a given order object and sets the completed status of that order in the database to true
+ * @param order given order object
+ * @throws SQLException
+ */
 
 
 	public void setOrderToComplete(Order order) throws SQLException {
-		// method is called upon when "complete order" button is pressed in UI
+		
 
 		// updating the order complete
 		int orderId = order.getOrderID();
@@ -174,6 +210,13 @@ public class OrderHandler {
 		conn.close();
 
 	}
+	
+	/**
+	 * Returns the completed status of a given order 
+	 * @param order object which is checked
+	 * @return boolean variable that refers to the completed status
+	 * @throws SQLException
+	 */
 
 	public boolean checkOrderStatus(Order order) throws SQLException {
 		boolean complete = false;
