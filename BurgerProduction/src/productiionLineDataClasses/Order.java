@@ -11,6 +11,15 @@ public class Order {
 	private Customer customer;
 	private List<Burger> burgers;
 	
+	/**
+	 * Data class which is used to instantiate an order object
+	 * @param completed boolean variable
+	 * @param timestamp timestamp variable
+	 * @param orderID int variable
+	 * @param customer customer object
+	 * @param burgers list of burger objects
+	 */
+	
 	public Order(boolean completed, Timestamp timestamp, int orderID, Customer customer, List<Burger> burgers) {
 		this.completed =completed;
 		this.setTimestamp(timestamp);

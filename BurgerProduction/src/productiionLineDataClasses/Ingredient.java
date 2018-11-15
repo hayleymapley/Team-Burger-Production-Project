@@ -5,6 +5,12 @@ public class Ingredient {
 	private String name;
 	private int quantity;
 	
+	/**
+	 *  Data class which is used to instantiate an ingredient object
+	 * @param name String variable
+	 * @param quantity int variable
+	 */
+	
 	public Ingredient(String name, int quantity) {
 		this.setName(name);
 		this.setQuantity(quantity);
