@@ -10,7 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import productiionLineDataClasses.Ingredient;
-
+/**
+ *This class instantiate the Stock Handler class
+ *This class hold list of Ingredient list and two string
+ *global variable to hold database username and password
+ * @author chadz
+ *
+ */
 public class StockHandler {
 
 	private List<Ingredient> ingredientsList;
@@ -19,6 +25,15 @@ public class StockHandler {
 
 	//goes to DB and returns list of ingredients for UI
 
+	/**
+	 * This is the method  which connect the 
+	 * jdbc datbase  by initialising username and password 
+	 * @param databaseUser static String  value use as database username 
+	 * @param databasePass static String value use as database password 
+	 * @return null if connection does not work
+	 * @throws SQLException
+	 */
+		
 	public Connection connectToDB(String databaseUser, String databasePass) throws SQLException { 
 		Connection connection;
 
@@ -40,6 +55,14 @@ public class StockHandler {
 		return null; //if connection does not work
 	}
 
+	/**
+	 * This is the method  which connect the 
+	 * jdbc datbase  to retrieve Ingredients From DB
+	 * This will return all the Ingredients in stock list 
+	 * @return ingredientsList  returining list values inside the ingredientsList
+	 * @throws SQLException
+	 */
+	
 	public List<Ingredient> retrieveIngredientsFromDB() throws SQLException { 
 
 		String ingredientName = null;
@@ -72,7 +95,14 @@ public class StockHandler {
 		return ingredientsList;
 		
 	}
-
+/**
+ * 
+ * This is the method  find correct syntax for increasing the quantity by X amount
+ * @param ingredient as an ingredient object 
+ * @param givenQuantity as an  integer value
+ * @return newQuantity as an integer value
+ * @throws SQLException
+ */
 	public int adjustQuantitiesInDB(Ingredient ingredient, int givenQuantity)throws SQLException{ //adds a current type of ingredient to database takes in quantity and ingredient object 
 		int newQuantity;
 		String requiredIngredientName = ingredient.getName();
@@ -93,7 +123,13 @@ public class StockHandler {
 		return newQuantity;
 
 	}
-
+/**
+ * This is the method returns the current stock level of a certain ingredient
+ * @param ingredient as an ingredient object
+ * @return currentStockLevel as integer 
+ * @throws SQLException
+ */
+	
 	public int checkCurrentStockLevels(Ingredient ingredient) throws SQLException { //returns the current stock level of a certain ingredient
 		int currentStockLevel = 0;
 		String requiredIngredientName = ingredient.getName();

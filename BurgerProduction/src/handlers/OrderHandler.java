@@ -26,6 +26,7 @@ import productiionLineDataClasses.Order;
 public class OrderHandler {
 	private String databaseUser = "mapleyhayl";
 	private String databaseUserPass = "pass123";
+<<<<<<< HEAD
 
 
 	/**
@@ -33,6 +34,9 @@ public class OrderHandler {
 	 * @return returns Connection object type 
 	 * @throws SQLException
 	 */
+=======
+	// global method to connect the jdbc
+>>>>>>> branch 'master' of git@gitlab.ecs.vuw.ac.nz:poperere/burgermakingproject.git
 	private Connection connect() throws SQLException {
 		Connection connection = null;
 		try {
@@ -68,15 +72,10 @@ public class OrderHandler {
 		String orderSql = "SELECT * FROM  orders WHERE COMPLETED = 'f' ";
 		ResultSet rs = stmt.executeQuery(orderSql);
 		while (rs.next()) {
-			
 			orderID = rs.getInt("order_id");
-
 			orderTS = rs.getTimestamp("timestamp");
-
-			orderComplete = rs.getBoolean("completed");
-			
-			customerID = findCustomerID(orderID);
-			
+			orderComplete = rs.getBoolean("completed");	
+			customerID = findCustomerID(orderID);	
 			Order newOrder = new Order(orderComplete, orderTS, orderID, findCustomer(customerID),findBurgerIngredients(orderID));
 			
 			orderNotCompleteList.add(newOrder);
