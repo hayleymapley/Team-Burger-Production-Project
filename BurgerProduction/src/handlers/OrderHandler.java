@@ -26,7 +26,6 @@ import productiionLineDataClasses.Order;
 public class OrderHandler {
 	private String databaseUser = "mapleyhayl";
 	private String databaseUserPass = "pass123";
-<<<<<<< HEAD
 
 
 	/**
@@ -34,9 +33,8 @@ public class OrderHandler {
 	 * @return returns Connection object type 
 	 * @throws SQLException
 	 */
-=======
-	// global method to connect the jdbc
->>>>>>> branch 'master' of git@gitlab.ecs.vuw.ac.nz:poperere/burgermakingproject.git
+
+
 	private Connection connect() throws SQLException {
 		Connection connection = null;
 		try {
