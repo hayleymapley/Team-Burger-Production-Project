@@ -39,6 +39,12 @@ import javafx.util.Callback;
 import productiionLineDataClasses.Ingredient;
 import productiionLineDataClasses.Order;
 
+/**
+ * This class is the main interface and uses instances of the OrderHandler and StockHandler and their methods
+ * to display information from the relational database to users of the GUI.
+ * @author hmapl
+ *
+ */
 public class JavaFXUI extends Application {
 
 	//Main screen
@@ -137,6 +143,10 @@ public class JavaFXUI extends Application {
 	private static List<String> notifications = new ArrayList<>();
 	private static ObservableList<String> notificationsList;
 
+	/**
+	 * This class is the entry point for JavaFX. All elements are instantiated and updated and the handlers for all the
+	 * buttons are here.
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
@@ -240,10 +250,17 @@ public class JavaFXUI extends Application {
 		}
 	}
 
+	/**
+	 * Main method - launches the JavaFX application.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	/**
+	 * Initialises and sets the properties of all elements on the main screen.
+	 */
 	public void initialiseMainElements() {
 		//Top Labels
 		ordersText.setText("Orders");
@@ -351,6 +368,9 @@ public class JavaFXUI extends Application {
 		root.setRight(notificationPane);
 	}
 
+	/**
+	 * Initialises and sets the properties of all elements on the inventory functions screen.
+	 */
 	public void initialiseInventoryElements() {
 
 		//Title bar
@@ -464,9 +484,12 @@ public class JavaFXUI extends Application {
 		inventoryRoot.setRight(inventoryAdjustment);
 	}
 
+	/**
+	 * Displays the details of the selected order in the order details section on the main screen.
+	 * @param order
+	 */
 	public void viewOrder(Order order) {
 
-		// inflates the selected view containing an order
 		orderIDText.setText("Order #" + Integer.toString(order.getOrderID()));
 		timeStampText.setText(order.getTimestamp().toString());
 		customerText.setText("Customer: " + order.getCustomer().getCustomerName() + "\n");
@@ -481,6 +504,11 @@ public class JavaFXUI extends Application {
 		ingredientsText.setText(ingredientsString);	//ONLY GETS THE FIRST BURGER OF EACH ORDER
 	}
 
+	/**
+	 * Sets the order to complete in the database.
+	 * @param order
+	 * @throws SQLException
+	 */
 	public static void completeOrder(Order order) throws SQLException {
 
 		orderHandler.setOrderToComplete(order); 
@@ -490,6 +518,10 @@ public class JavaFXUI extends Application {
 
 	}
 
+	/**
+	 * Updates the panel containing the current orders.
+	 * @throws SQLException
+	 */
 	public static void updateOrderPanel() throws SQLException {
 
 		//Retrieve list of orders from the database
@@ -503,6 +535,10 @@ public class JavaFXUI extends Application {
 		ordersListView.getItems().addAll(ordersList);
 	}
 
+	/**
+	 * Displays the current stock levels.
+	 * @throws SQLException
+	 */
 	public void displayStockLevels() throws SQLException {
 
 		ingredients = stockHandler.retrieveIngredientsFromDB();
@@ -525,6 +561,9 @@ public class JavaFXUI extends Application {
 
 	}
 
+	/**
+	 * Allows user to adjust levels of stock.
+	 */
 	public void adjustStock() {
 
 		fields = new ArrayList<>();
@@ -556,6 +595,10 @@ public class JavaFXUI extends Application {
 		}
 	}
 
+	/**
+	 * Checks if there is any ingredients in low quantity and adds a notification if so.
+	 * @throws SQLException
+	 */
 	public static void checkForStockWarnings() throws SQLException {
 
 		ingredients = stockHandler.retrieveIngredientsFromDB();
@@ -567,6 +610,10 @@ public class JavaFXUI extends Application {
 		}
 	}
 
+	/**
+	 * Updates the panel holding the notifications.
+	 * @throws SQLException
+	 */
 	public static void updateNotificationPanel() throws SQLException {
 
 		checkForStockWarnings();
@@ -578,6 +625,11 @@ public class JavaFXUI extends Application {
 
 	}
 
+	/**
+	 * Extends ListCell to provide custom order list cell items with clickable image.
+	 * @author hmapl
+	 *
+	 */
 	static class OrdersCell extends ListCell<Order> {
 		HBox hbox = new HBox();
 		Label label = new Label("(empty)");
@@ -586,6 +638,9 @@ public class JavaFXUI extends Application {
 		ImageView imageView = new ImageView(checkmark);
 		Button button = new Button();
 
+		/**
+		 * Constructor
+		 */
 		public OrdersCell() {
 			super();
 			hbox.getChildren().addAll(label, pane, button);
@@ -607,6 +662,9 @@ public class JavaFXUI extends Application {
 			});
 		}
 
+		/**
+		 * Updates the list item
+		 */
 		@Override
 		protected void updateItem(Order item, boolean empty) {
 			super.updateItem(item, empty);
@@ -620,6 +678,11 @@ public class JavaFXUI extends Application {
 		}
 	}
 
+	/**
+	 * Extends ListCell to provide custom notifications list cell items with clickable image.
+	 * @author hmapl
+	 *
+	 */
 	static class NotificationsCell extends ListCell<String> {
 		HBox hbox = new HBox();
 		Label label = new Label("(empty)");
@@ -628,6 +691,9 @@ public class JavaFXUI extends Application {
 		ImageView imageView = new ImageView(exclamation);
 		Button button = new Button();
 
+		/**
+		 * Constructor.
+		 */
 		public NotificationsCell() {
 			super();
 			hbox.getChildren().addAll(label, pane, button);
@@ -645,6 +711,9 @@ public class JavaFXUI extends Application {
 			});
 		}
 
+		/**
+		 * Updates List Cell item.
+		 */
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
