@@ -19,10 +19,9 @@ import productiionLineDataClasses.Ingredient;
 import productiionLineDataClasses.Order;
 
 /*
- * Class responsible for running queries/updates on Postgres sql database using JDBC
+ * Class responsible for running queries/updates on Orders in database using JDBC
  * Both fields are based on the DB we are using but can be changed as required
  */
-
 public class OrderHandler {
 	private String databaseUser = "mapleyhayl";
 	private String databaseUserPass = "pass123";
